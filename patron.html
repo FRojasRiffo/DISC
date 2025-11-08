@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Resultado DISC - Patrón</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #222;
+      line-height: 1.6;
+    }
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #004aad;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(135deg, #004aad, #0066ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    h2 {
+      color: #004aad;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+      border-left: 4px solid #ffd700;
+      padding-left: 15px;
+    }
+    p {
+      margin-bottom: 15px;
+      color: #444;
+    }
+    .meta {
+      margin-top: 30px;
+      margin-bottom: 20px;
+      font-style: italic;
+      padding: 15px;
+      background: linear-gradient(135deg, #f0f7ff, #ffffff);
+      border-radius: 10px;
+      border-left: 4px solid #ffd700;
+    }
+    code {
+      background: #f0f7ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #004aad;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Patrón del Objetivo</h1>
+
+    <h2>Emociones:</h2>
+    <p>Puede rechazar la agresión interpersonal.</p>
+
+    <h2>Meta:</h2>
+    <p>La exactitud.</p>
+
+    <h2>Juzga a los demás por:</h2>
+    <p>Su capacidad de pensamiento analítico.</p>
+
+    <h2>Influye en los demás mediante:</h2>
+    <p>La información objetiva, los argumentos lógicos.</p>
+
+    <h2>Su valor para la organización:</h2>
+    <p>Define, esclarece, obtiene información, evalúa, comprueba.</p>
+
+    <h2>Abusa de:</h2>
+    <p>El análisis.</p>
+
+    <h2>Bajo presión:</h2>
+    <p>Se vuelve aprensivo.</p>
+
+    <h2>Teme:</h2>
+    <p>Actos irracionales, el ridículo.</p>
+
+    <h2>Sería más eficaz si:</h2>
+    <p>Fuera más abierto, compartiera en público su perspicacia y opiniones.</p>
+
+    <h2>Descripción:</h2>
+    <p>La capacidad de pensamiento crítico suele estar muy desarrollada en el Objetivo. Recalca la importancia de sacar conclusiones y basar las acciones en hechos. Busca la precisión y exactitud en todo lo que hace...</p>
+
+    <div class="meta">
+      <p><strong>Nota:</strong> En la versión final, este texto se ajustará dinámicamente según los resultados DISC almacenados en <code>localStorage</code>.</p>
+    </div>
+  </div>
+
+  <script>
+    // Example of accessing stored DISC results
+    const results = JSON.parse(localStorage.getItem("discResults"));
+    console.log("Resultados DISC:", results);
+  </script>
+</body>
+</html>
