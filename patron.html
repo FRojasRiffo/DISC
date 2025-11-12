@@ -1,82 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Resultado DISC - Patrón</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 40px 20px;
-      background: linear-gradient(90deg, #a8e6cf 0%, #b8e6d3 25%, #c8e6d7 50%, #d4e8e0 75%, #e0eae9 100%);
-      min-height: 100vh;
-      color: #222;
-      line-height: 1.6;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-      max-width: 800px;
-      margin: auto;
-      backdrop-filter: blur(10px);
-    }
-    h1 {
-      text-align: center;
-      color: #2c2c2c;
-      font-size: 2.5em;
-      margin-bottom: 30px;
-      font-weight: 600;
-    }
-    h2 {
-      color: #5fa890;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      font-size: 1.4em;
-      border-left: 4px solid #7fb8a3;
-      padding-left: 15px;
-    }
-    p {
-      margin-bottom: 15px;
-      color: #444;
-    }
-    .meta {
-      margin-top: 30px;
-      margin-bottom: 20px;
-      font-style: italic;
-      padding: 15px;
-      background: linear-gradient(135deg, #f0f9f5, #ffffff);
-      border-radius: 10px;
-      border-left: 4px solid #7fb8a3;
-    }
-    code {
-      background: #f0f9f5;
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: #5fa890;
-      font-family: 'Courier New', monospace;
-    }
-  </style>
+  <link rel="stylesheet" href="results.css" />
 </head>
 <body>
-  <div class="logo-header" style="text-align: center; margin-bottom: 20px;">
-    <div style="display: inline-block; margin-bottom: 15px;">
-      <div style="width: 120px; height: 120px; margin: 0 auto;">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-          <path d="M 100,30 A 70,70 0 1,1 100,170" stroke="#2c2c2c" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <header class="logo-header">
+    <div class="logo-container">
+      <div class="logo-circle">
+        <!-- === Inline SVG logo (copied from index.html) === -->
+        <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="arc-path" d="M 100,30 A 70,70 0 1,1 100,170"/>
+            <path id="arc-path-top" d="M 140,50 Q 100,30 60,50"/>
+            <path id="arc-path-bottom" d="M 60,150 Q 100,170 140,150"/>
+          </defs>
+          
+          <!-- Circular arc -->
+          <path d="M 100,30 A 70,70 0 1,1 100,170" 
+                stroke="#2c2c2c" 
+                stroke-width="6" 
+                fill="none" 
+                stroke-linecap="round"/>
+          
+          <!-- Stars -->
           <g transform="translate(70,50)">
             <polygon points="0,-4 1,-1 4,-1 1.5,1 2.5,4 0,2 -2.5,4 -1.5,1 -4,-1 -1,-1" fill="#2c2c2c"/>
           </g>
           <g transform="translate(130,150)">
             <polygon points="0,-4 1,-1 4,-1 1.5,1 2.5,4 0,2 -2.5,4 -1.5,1 -4,-1 -1,-1" fill="#2c2c2c"/>
           </g>
+          
+          <!-- Dots -->
           <circle cx="115" cy="45" r="2" fill="#2c2c2c"/>
           <circle cx="85" cy="55" r="1.5" fill="#2c2c2c"/>
           <circle cx="125" cy="75" r="1.5" fill="#2c2c2c"/>
@@ -85,58 +42,72 @@
           <circle cx="70" cy="115" r="1.5" fill="#2c2c2c"/>
           <circle cx="125" cy="145" r="1.5" fill="#2c2c2c"/>
           <circle cx="75" cy="155" r="1.5" fill="#2c2c2c"/>
-          <text x="100" y="50" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="18" font-weight="600" fill="#2c2c2c">Onboarding</text>
-          <text x="88" y="105" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="48" font-weight="700" fill="#2c2c2c">O</text>
-          <text x="112" y="105" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="48" font-weight="700" fill="#2c2c2c">B</text>
-          <text x="100" y="160" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="10" fill="#2c2c2c">Global skills for job positioning</text>
+          <circle cx="120" cy="60" r="1" fill="#2c2c2c"/>
+          <circle cx="80" cy="70" r="1" fill="#2c2c2c"/>
+          <circle cx="135" cy="95" r="1" fill="#2c2c2c"/>
+          <circle cx="65" cy="100" r="1" fill="#2c2c2c"/>
+          <circle cx="135" cy="125" r="1" fill="#2c2c2c"/>
+          <circle cx="65" cy="130" r="1" fill="#2c2c2c"/>
+          
+          <!-- Text -->
+          <text x="100" y="50" class="logo-text-top" text-anchor="middle">Onboarding</text>
+          <text x="88" y="105" class="logo-initials">O</text>
+          <text x="112" y="105" class="logo-initials">B</text>
+          <text x="100" y="160" class="logo-text-bottom" text-anchor="middle">Global skills for job positioning</text>
         </svg>
+        <!-- === End SVG === -->
       </div>
     </div>
-  </div>
+  </header>
+
   <div class="container">
-    <h1>Patrón del Objetivo</h1>
+    <h1 id="nombre">Patrón del Alentador</h1>
 
     <h2>Emociones:</h2>
-    <p>Puede rechazar la agresión interpersonal.</p>
+    <p id="emociones"></p>
 
     <h2>Meta:</h2>
-    <p>La exactitud.</p>
+    <p id="meta"></p>
 
     <h2>Juzga a los demás por:</h2>
-    <p>Su capacidad de pensamiento analítico.</p>
+    <p id="juzga_a_los_demas_por"></p>
 
     <h2>Influye en los demás mediante:</h2>
-    <p>La información objetiva, los argumentos lógicos.</p>
+    <p id="influye_en_los_demas_mediante"></p>
 
     <h2>Su valor para la organización:</h2>
-    <p>Define, esclarece, obtiene información, evalúa, comprueba.</p>
+    <p id="valor_para_la_organizacion"></p>
 
     <h2>Abusa de:</h2>
-    <p>El análisis.</p>
+    <p id="abusa_de"></p>
 
     <h2>Bajo presión:</h2>
-    <p>Se vuelve aprensivo.</p>
+    <p id="bajo_presion"></p>
 
     <h2>Teme:</h2>
-    <p>Actos irracionales, el ridículo.</p>
+    <p id="teme"></p>
 
     <h2>Sería más eficaz si:</h2>
-    <p>Fuera más abierto, compartiera en público su perspicacia y opiniones.</p>
+    <p id="seria_mas_eficaz_si"></p>
 
     <h2>Descripción:</h2>
-    <p>La capacidad de pensamiento crítico suele estar muy desarrollada en el Objetivo.  Recalca la importancia de sacar conclusiones y basar las acciones en hechos.  Busca la precisión y exactitud en todo lo que hace.  Sin embargo, para llevar a cabo con eficiencia su trabajo, el Objetivo suele combinar la información intuitiva con los datos que posee.  Cuando duda sobre el curso a tomar, evita hacer el ridículo preparándose meticulosamente.  Por ejemplo, el Objetivo perfeccionará una nueva habilidad en privado antes de usarla en alguna actividad de grupo.</p>
-    <p>El Objetivo prefiere trabajar con personas que , como él, prefieren mantener un ambiente laboral tranquilo.  Como puede mostrarse reticente en expresar sus sentimiento, hay quienes lo consideran tímido.  Se siente particularmente incómodo ante personas agresivas.  A pesar de esta apariencia templada, el Objetivo tiene un fuerte necesidad de controlar el ambiente.  Suele ejercer este control en forma indirecta solicitando el apego a reglas y normas.</p>
-    <p>El Objetivo se preocupa por llegar a respuestas “correctas” y le puede resultar difícil tomar decisiones en situaciones ambiguas.  Su tendencia a preocuparse le puede llevar a una “parálisis por análisis”.  Con demasiada frecuencia, cuando comete un error, titubea en reconocerlo y se empreña en buscar información que le permita apoyar su postura.</p>
+    <p id="descripcion"></p>
 
-    <div class="meta">
-      <p><strong>Nota:</strong> En la versión final, este texto se ajustará dinámicamente según los resultados DISC almacenados en <code>localStorage</code>.</p>
-    </div>
+    <h2>Nivel de Onboarding:</h2>
+    <p id="nivel_onboarding"></p>
+
+    <h2>Aprendizajes esperados:</h2>
+    <p id="aprendizajes_esperados"></p>
   </div>
 
+  <script src="patrones.js"></script>
   <script>
-    // Example of accessing stored DISC results
-    const results = JSON.parse(localStorage.getItem("discResults"));
-    console.log("Resultados DISC:", results);
+    // Usar el primer patrón como placeholder
+    const patron = window.patrones[0];
+    for (const key in patron) {
+      const el = document.getElementById(key);
+      if (el) el.textContent = patron[key];
+    }
   </script>
 </body>
 </html>
