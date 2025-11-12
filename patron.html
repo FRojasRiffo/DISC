@@ -4,59 +4,117 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Resultado DISC - Patrón</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(90deg, #a8e6cf 0%, #b8e6d3 25%, #c8e6d7 50%, #d4e8e0 75%, #e0eae9 100%);
+      min-height: 100vh;
+      color: #222;
+      line-height: 1.6;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      max-width: 800px;
+      margin: auto;
+      backdrop-filter: blur(10px);
+    }
+    h1 {
+      text-align: center;
+      color: #2c2c2c;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    h2 {
+      color: #5fa890;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+      border-left: 4px solid #7fb8a3;
+      padding-left: 15px;
+    }
+    p {
+      margin-bottom: 15px;
+      color: #444;
+    }
+    .meta {
+      margin-top: 30px;
+      margin-bottom: 20px;
+      font-style: italic;
+      padding: 15px;
+      background: linear-gradient(135deg, #f0f9f5, #ffffff);
+      border-radius: 10px;
+      border-left: 4px solid #7fb8a3;
+    }
+    code {
+      background: #f0f9f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #5fa890;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
   <link rel="stylesheet" href="results.css" />
 </head>
 <body>
-  <header class="logo-header">
-    <div class="logo-container">
-      <div class="logo-circle">
-        <!-- === Inline SVG logo (copied from index.html) === -->
-        <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <path id="arc-path" d="M 100,30 A 70,70 0 1,1 100,170"/>
-            <path id="arc-path-top" d="M 140,50 Q 100,30 60,50"/>
-            <path id="arc-path-bottom" d="M 60,150 Q 100,170 140,150"/>
-          </defs>
-          
-          <!-- Circular arc -->
-          <path d="M 100,30 A 70,70 0 1,1 100,170" 
-                stroke="#2c2c2c" 
-                stroke-width="6" 
-                fill="none" 
-                stroke-linecap="round"/>
-          
-          <!-- Stars -->
-          <g transform="translate(70,50)">
-            <polygon points="0,-4 1,-1 4,-1 1.5,1 2.5,4 0,2 -2.5,4 -1.5,1 -4,-1 -1,-1" fill="#2c2c2c"/>
-          </g>
-          <g transform="translate(130,150)">
-            <polygon points="0,-4 1,-1 4,-1 1.5,1 2.5,4 0,2 -2.5,4 -1.5,1 -4,-1 -1,-1" fill="#2c2c2c"/>
-          </g>
-          
-          <!-- Dots -->
-          <circle cx="115" cy="45" r="2" fill="#2c2c2c"/>
-          <circle cx="85" cy="55" r="1.5" fill="#2c2c2c"/>
-          <circle cx="125" cy="75" r="1.5" fill="#2c2c2c"/>
-          <circle cx="75" cy="85" r="1.5" fill="#2c2c2c"/>
-          <circle cx="130" cy="110" r="1.5" fill="#2c2c2c"/>
-          <circle cx="70" cy="115" r="1.5" fill="#2c2c2c"/>
-          <circle cx="125" cy="145" r="1.5" fill="#2c2c2c"/>
-          <circle cx="75" cy="155" r="1.5" fill="#2c2c2c"/>
-          <circle cx="120" cy="60" r="1" fill="#2c2c2c"/>
-          <circle cx="80" cy="70" r="1" fill="#2c2c2c"/>
-          <circle cx="135" cy="95" r="1" fill="#2c2c2c"/>
-          <circle cx="65" cy="100" r="1" fill="#2c2c2c"/>
-          <circle cx="135" cy="125" r="1" fill="#2c2c2c"/>
-          <circle cx="65" cy="130" r="1" fill="#2c2c2c"/>
-          
-          <!-- Text -->
-          <text x="100" y="50" class="logo-text-top" text-anchor="middle">Onboarding</text>
-          <text x="88" y="105" class="logo-initials">O</text>
-          <text x="112" y="105" class="logo-initials">B</text>
-          <text x="100" y="160" class="logo-text-bottom" text-anchor="middle">Global skills for job positioning</text>
-        </svg>
-        <!-- === End SVG === -->
-      </div>
+  <!-- Encabezado con el logo SVG del index.html -->
+  <header class="logo-header" style="text-align: center; margin-bottom: 30px;">
+    <div style="display: inline-block; width: 140px; height: 140px;">
+      <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+        <defs>
+          <path id="arc-path" d="M 100,30 A 70,70 0 1,1 100,170"/>
+          <path id="arc-path-top" d="M 140,50 Q 100,30 60,50"/>
+          <path id="arc-path-bottom" d="M 60,150 Q 100,170 140,150"/>
+        </defs>
+        
+        <!-- Circular arc -->
+        <path d="M 100,30 A 70,70 0 1,1 100,170" 
+              stroke="#2c2c2c" 
+              stroke-width="6" 
+              fill="none" 
+              stroke-linecap="round"/>
+        
+        <!-- Stars -->
+        <g transform="translate(70,50)">
+          <polygon points="0,-4 1,-1 4,-1 1.5,1 2.5,4 0,2 -2.5,4 -1.5,1 -4,-1 -1,-1" fill="#2c2c2c"/>
+        </g>
+        <g transform="translate(130,150)">
+          <polygon points="0,-4 1,-1 4,-1 1.5,1 2.5,4 0,2 -2.5,4 -1.5,1 -4,-1 -1,-1" fill="#2c2c2c"/>
+        </g>
+
+        <!-- Dots -->
+        <circle cx="115" cy="45" r="2" fill="#2c2c2c"/>
+        <circle cx="85" cy="55" r="1.5" fill="#2c2c2c"/>
+        <circle cx="125" cy="75" r="1.5" fill="#2c2c2c"/>
+        <circle cx="75" cy="85" r="1.5" fill="#2c2c2c"/>
+        <circle cx="130" cy="110" r="1.5" fill="#2c2c2c"/>
+        <circle cx="70" cy="115" r="1.5" fill="#2c2c2c"/>
+        <circle cx="125" cy="145" r="1.5" fill="#2c2c2c"/>
+        <circle cx="75" cy="155" r="1.5" fill="#2c2c2c"/>
+        <circle cx="120" cy="60" r="1" fill="#2c2c2c"/>
+        <circle cx="80" cy="70" r="1" fill="#2c2c2c"/>
+        <circle cx="135" cy="95" r="1" fill="#2c2c2c"/>
+        <circle cx="65" cy="100" r="1" fill="#2c2c2c"/>
+        <circle cx="135" cy="125" r="1" fill="#2c2c2c"/>
+        <circle cx="65" cy="130" r="1" fill="#2c2c2c"/>
+
+        <!-- Text -->
+        <text x="100" y="50" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="18" font-weight="600" fill="#2c2c2c">Onboarding</text>
+        <text x="88" y="105" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="48" font-weight="700" fill="#2c2c2c">O</text>
+        <text x="112" y="105" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="48" font-weight="700" fill="#2c2c2c">B</text>
+        <text x="100" y="160" text-anchor="middle" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="10" fill="#2c2c2c">Global skills for job positioning</text>
+      </svg>
     </div>
   </header>
 
@@ -102,7 +160,7 @@
 
   <script src="patrones.js"></script>
   <script>
-    // Usar el primer patrón como placeholder
+    // Cargar placeholder desde patrones.js
     const patron = window.patrones[0];
     for (const key in patron) {
       const el = document.getElementById(key);
