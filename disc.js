@@ -3,9 +3,130 @@ document.addEventListener("DOMContentLoaded", () => {
   const words = groups[0].words;
   const totalGroups = words.length / 4;
 
-  // Base scores: D=4, I=4, S=5, C=4
-    const baseScores = { D: 4, I: 4, S: 5, C: 4 };
-    const displayOffset = { D: -4, I: -4, S: -5, C: -4 };
+  // Base scores iniciales: D=4, I=4, S=5, C=4
+  const initialBaseScores = { D: 4, I: 4, S: 5, C: 4 };
+  const displayOffset = { D: -4, I: -4, S: -5, C: -4 };
+
+  // Mapeo de intensidad a segmento según la tabla DISC
+  // Segment 7: Intensities 28, 27, 26
+  // Segment 6: Intensities 25, 24, 23, 22, 21, 20
+  // Segment 5: Intensities 19, 18, 17
+  // Segment 4: Intensities 16, 15, 14, 13
+  // Segment 3: Intensities 12, 11, 10, 9
+  // Segment 2: Intensities 8, 7, 6, 5
+  // Segment 1: Intensities 4, 3, 2, 1
+  function getSegmentFromIntensity(intensity) {
+    if (intensity >= 28) return 7;
+    if (intensity >= 25) return 6;
+    if (intensity >= 19) return 5;
+    if (intensity >= 13) return 4;
+    if (intensity >= 9) return 3;
+    if (intensity >= 5) return 2;
+    return 1;
+  }
+
+  // Tabla de mapeo directo de puntaje a intensidad para cada tipo DISC
+  // Basado en la tabla proporcionada
+  const scoreToIntensityMap = {
+    D: {
+      // Intensidad: Puntaje
+      28: 28, 27: 12, 26: null, 25: 9, 24: 8, 23: 7, 22: 6, 21: 5, 20: 4,
+      19: 3, 18: null, 17: 2, 16: 1, 15: 0, 14: 0, 13: null, 12: -1,
+      11: -2, 10: null, 9: -3, 8: -4, 7: -5, 6: -6, 5: -7, 4: -8,
+      3: null, 2: -11, 1: -28
+    },
+    I: {
+      28: 28, 27: 10, 26: null, 25: 7, 24: 6, 23: 5, 22: 4, 21: null, 20: 3,
+      19: null, 18: 2, 17: null, 16: 1, 15: 0, 14: null, 13: -1, 12: -2,
+      11: null, 10: -3, 9: null, 8: -4, 7: -5, 6: -6, 5: -7, 4: -8,
+      3: null, 2: -11, 1: -28
+    },
+    S: {
+      28: 28, 27: 10, 26: null, 25: 8, 24: 7, 23: 6, 22: 4, 21: 3, 20: 2,
+      19: 1, 18: null, 17: 0, 16: -1, 15: -2, 14: null, 13: -3, 12: -4,
+      11: -5, 10: null, 9: -6, 8: -7, 7: -8, 6: -9, 5: -10, 4: -11,
+      3: null, 2: -13, 1: -28
+    },
+    C: {
+      28: 28, 27: 11, 26: null, 25: 9, 24: 8, 23: 7, 22: 6, 21: 5, 20: 4,
+      19: null, 18: 3, 17: null, 16: 2, 15: 1, 14: null, 13: 0, 12: -1,
+      11: null, 10: -2, 9: null, 8: -3, 7: -4, 6: null, 5: -5, 4: -6,
+      3: null, 2: -11, 1: -28
+    }
+  };
+
+  // Convertir puntaje DISC a intensidad usando la tabla de mapeo
+  function getIntensityFromScore(score, type) {
+    const map = scoreToIntensityMap[type];
+    if (!map) return 15; // Default
+    
+    // Buscar la intensidad que corresponde al puntaje
+    // Si hay múltiples, tomar la más cercana
+    let closestIntensity = 15; // Default
+    let minDiff = Infinity;
+    
+    for (const [intensity, mappedScore] of Object.entries(map)) {
+      if (mappedScore === null) continue;
+      const diff = Math.abs(mappedScore - score);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIntensity = parseInt(intensity);
+      }
+      // Si encontramos una coincidencia exacta, retornar inmediatamente
+      if (mappedScore === score) {
+        return parseInt(intensity);
+      }
+    }
+    
+    // Si no hay coincidencia exacta, usar interpolación lineal entre los puntos más cercanos
+    // Buscar los dos puntos más cercanos (uno mayor y uno menor)
+    let lowerIntensity = null;
+    let upperIntensity = null;
+    let lowerScore = null;
+    let upperScore = null;
+    
+    for (const [intensity, mappedScore] of Object.entries(map)) {
+      if (mappedScore === null) continue;
+      const intIntensity = parseInt(intensity);
+      if (mappedScore <= score) {
+        if (lowerIntensity === null || mappedScore > lowerScore) {
+          lowerIntensity = intIntensity;
+          lowerScore = mappedScore;
+        }
+      }
+      if (mappedScore >= score) {
+        if (upperIntensity === null || mappedScore < upperScore) {
+          upperIntensity = intIntensity;
+          upperScore = mappedScore;
+        }
+      }
+    }
+    
+    // Interpolación lineal
+    if (lowerIntensity !== null && upperIntensity !== null && lowerScore !== upperScore) {
+      const ratio = (score - lowerScore) / (upperScore - lowerScore);
+      const interpolated = lowerIntensity + ratio * (upperIntensity - lowerIntensity);
+      return Math.round(interpolated);
+    }
+    
+    // Si solo tenemos un punto de referencia, usar extrapolación
+    if (lowerIntensity !== null && upperIntensity === null) {
+      // Extrapolar hacia abajo
+      return Math.max(1, lowerIntensity - 1);
+    }
+    if (upperIntensity !== null && lowerIntensity === null) {
+      // Extrapolar hacia arriba
+      return Math.min(28, upperIntensity + 1);
+    }
+    
+    return closestIntensity;
+  }
+
+  // Obtener el segmento actual basado en el puntaje y tipo
+  function getSegmentFromScore(score, type) {
+    const intensity = getIntensityFromScore(score, type);
+    return getSegmentFromIntensity(intensity);
+  }
 
   // Generate form
   for (let i = 0; i < words.length; i += 4) {
@@ -29,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to calculate current scores
   function calculateScores() {
-    const results = { D: baseScores.D, I: baseScores.I, S: baseScores.S, C: baseScores.C };
+    const results = { D: initialBaseScores.D, I: initialBaseScores.I, S: initialBaseScores.S, C: initialBaseScores.C };
 
     for (let i = 1; i <= totalGroups; i++) {
       const more = form.querySelector(`input[name="more_${i}"]:checked`);
@@ -58,10 +179,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to update score counter display
   function updateScoreCounter() {
-    const scores = calculateScores();
-    const counterElement = document.getElementById("scoreCounter");
-    
-    if (counterElement) {
+    try {
+      const scores = calculateScores();
+      const counterElement = document.getElementById("scoreCounter");
+      
+      if (!counterElement) {
+        console.error("Elemento scoreCounter no encontrado");
+        return;
+      }
+      
       // Count how many Más and Menos are selected
       let masCount = 0;
       let menosCount = 0;
@@ -74,6 +200,22 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const masRemaining = totalGroups - masCount;
       const menosRemaining = totalGroups - menosCount;
+      
+      // Calcular segmentos actuales para cada tipo
+      const segments = {
+        D: getSegmentFromScore(scores.D, 'D'),
+        I: getSegmentFromScore(scores.I, 'I'),
+        S: getSegmentFromScore(scores.S, 'S'),
+        C: getSegmentFromScore(scores.C, 'C')
+      };
+      
+      // Calcular intensidades actuales
+      const intensities = {
+        D: getIntensityFromScore(scores.D, 'D'),
+        I: getIntensityFromScore(scores.I, 'I'),
+        S: getIntensityFromScore(scores.S, 'S'),
+        C: getIntensityFromScore(scores.C, 'C')
+      };
       
       counterElement.innerHTML = `
         <h3 style="margin-bottom: 15px; color: #2c2c2c; text-align: center;">Contador de Puntuación DISC</h3>
@@ -89,11 +231,18 @@ document.addEventListener("DOMContentLoaded", () => {
           </thead>
           <tbody>
             <tr>
-              <td class="score-label">Base</td>
-              <td class="score-base">${baseScores.D}</td>
-              <td class="score-base">${baseScores.I}</td>
-              <td class="score-base">${baseScores.S}</td>
-              <td class="score-base">${baseScores.C}</td>
+              <td class="score-label">Segmento Actual</td>
+              <td class="score-base">${segments.D}</td>
+              <td class="score-base">${segments.I}</td>
+              <td class="score-base">${segments.S}</td>
+              <td class="score-base">${segments.C}</td>
+            </tr>
+            <tr>
+              <td class="score-label">Intensidad</td>
+              <td class="score-intensity">${intensities.D}</td>
+              <td class="score-intensity">${intensities.I}</td>
+              <td class="score-intensity">${intensities.S}</td>
+              <td class="score-intensity">${intensities.C}</td>
             </tr>
             <tr>
               <td class="score-label">Puntuación Actual</td>
@@ -109,6 +258,16 @@ document.addEventListener("DOMContentLoaded", () => {
           ${masRemaining > 0 || menosRemaining > 0 ? `<br><span style="color: #e67e22;">Faltan ${masRemaining} "Más" y ${menosRemaining} "Menos"</span>` : '<br><span style="color: #27ae60;">✓ Test completo</span>'}
         </div>
       `;
+    } catch (error) {
+      console.error("Error al actualizar contador de puntuación:", error);
+      const counterElement = document.getElementById("scoreCounter");
+      if (counterElement) {
+        counterElement.innerHTML = `
+          <div style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; color: #856404;">
+            <strong>Error:</strong> No se pudo cargar la tabla de puntuación. Por favor, recarga la página.
+          </div>
+        `;
+      }
     }
   }
 
@@ -149,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submitBtn");
   submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    const results = { D: baseScores.D, I: baseScores.I, S: baseScores.S, C: baseScores.C };
+    const results = { D: initialBaseScores.D, I: initialBaseScores.I, S: initialBaseScores.S, C: initialBaseScores.C };
 
     for (let i = 1; i <= totalGroups; i++) {
       const more = form.querySelector(`input[name="more_${i}"]:checked`);

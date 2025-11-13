@@ -336,6 +336,13 @@ button:active {
   background: #fafafa;
 }
 
+.score-intensity {
+  font-weight: 600;
+  color: #7fb8a3;
+  background: #f0f9f5;
+  font-size: 1.1em;
+}
+
 @media (max-width: 600px) {
   h1 {
     font-size: 2em;

@@ -13,13 +13,14 @@ window.patrones = [
     bajo_presion: "Se vuelve manipulador, pendenciero, beligerante.",
     teme: "Ser demasiado blando, perder su posición social. ",
     seria_mas_eficaz_si: "Fuera más genuina su sensibilidad; estuviera más dispuesto a ayudar a otros a tener éxito en su propio desarrollo personal.",
-    descripcion: "Las personas con patrón alentador saben con exactitud los resultados que quieren, pero no siempre los verbalizan de inmediato.  Manifiestan cuáles son los resultados que quieren sólo después de que se haya creado un ambiente apropiado y la otra persona está dispuesta a aceptarlos.  Por ejemplo, estas personas ofrecen amistad a quienes desean ser aceptados, más autoridad a quienes buscan poder y seguridad a quienes buscan un ambiente predecible. El alentador pude ser encantador en su trato con los demás.  Es persuasivo para obtener ayuda cuando se le presentan detalles repetitivos y que consumen mucho tiempo.  Sin embargo, las personas a menudo experimentan ante ellos una sensación de conflicto,  al sentirse por un lado atraídos, y curiosamente al mismo tiempo distanciados.  Otras pueden sentirse “utilizadas”.  Aunque algunas veces el alentador inspira temor en los demás y rechaza sus decisiones, el Alentador suele ser apreciado por sus colaboradores.  Esto lo consigue al usar siempre que le es posible su enorme capacidad de palabra para persuadir.  El Alentador prefiere alcanzar sus objetivos no dominando a las personas sino haciendo de agente para realizar el trabajo."
+    descripcion: "Las personas con patrón alentador saben con exactitud los resultados que quieren, pero no siempre los verbalizan de inmediato.  Manifiestan cuáles son los resultados que quieren sólo después de que se haya creado un ambiente apropiado y la otra persona está dispuesta a aceptarlos.  Por ejemplo, estas personas ofrecen amistad a quienes desean ser aceptados, más autoridad a quienes buscan poder y seguridad a quienes buscan un ambiente predecible. El alentador pude ser encantador en su trato con los demás.  Es persuasivo para obtener ayuda cuando se le presentan detalles repetitivos y que consumen mucho tiempo.  Sin embargo, las personas a menudo experimentan ante ellos una sensación de conflicto,  al sentirse por un lado atraídos, y curiosamente al mismo tiempo distanciados.  Otras pueden sentirse “utilizadas”.  Aunque algunas veces el alentador inspira temor en los demás y rechaza sus decisiones, el Alentador suele ser apreciado por sus colaboradores.  Esto lo consigue al usar siempre que le es posible su enorme capacidad de palabra para persuadir.  El Alentador prefiere alcanzar sus objetivos no dominando a las personas sino haciendo de agente para realizar el trabajo.",
+    codigos: "7774"
   },
   //2
   {
     nombre: "Patrón del Realizador",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Activo, diligente, muestra frustración.",
     meta: "Logros personales, en ocasiones a expensas de la meta de grupo.",
     juzga_a_los_demas_por: "El logro de resultados concretos.",
@@ -29,13 +30,14 @@ window.patrones = [
     bajo_presion: "Se frustra e impacienta con los demás, se convierte en una persona que “lo hace todo”  en vez de ser alguien que delega.",
     teme: "A quienes tienen niveles inferiores o competitivos de trabajo, que afectan los resultados.",
     seria_mas_eficaz_si: "Dejara de pensar en “esto o lo otro”, estableciera su prioridades con mayor claridad y aceptara enfoques alternativos, estuviera dispuesto a sacrificar los beneficios a corto plazo por otros a largo plazo.",
-    descripcion: "La motivación del Patrón Realizador surge en gran parte de su interior y de metas personales muy profundas. Este compromiso previo con sus propias metas impide que acepte automáticamente las metas del grupo.  El Realizador necesita combinar sus metas personales con las metas de la organización.  Como el Realizador siempre ha ejercido control sobre los aspectos más importantes de su vida, desarrolla a menudo un fuerte sentido de la responsabilidad. El Realizador demuestra un profundo interés por su trabajo y un continuo e intenso afán por conseguir lo que se propone.   Tiene una alta opinión de su trabajo y suele realizar las cosas por él mismo para asegurarse de que todo esté bien hecho.  Valora el trabajo arduo y bajo presión “prefiere hacer” que delegar en otro.   Cuando delega algo, suele volver ha realizarlo si no satisface sus expectativas.  Su premisa dice: “si tengo éxito, el mérito me corresponde, pero si fracaso, asumo la responsabilidad”. Si el Realizador se comunica más con los demás dejaría de pensar en “esto o lo otro”, del “yo mismo lo tengo que hacer” o “quiero todo el crédito para mí”.  Tal vez necesite ayuda para considerar otras propuestas y conseguir los resultados que desea.  El Realizador sabe que funciona al máximo de su capacidad y espera un reconocimiento similar a su contribución, en ciertas organizaciones mediante ganancias elevadas y en otras con posiciones de mando."
+    descripcion: "La motivación del Patrón Realizador surge en gran parte de su interior y de metas personales muy profundas. Este compromiso previo con sus propias metas impide que acepte automáticamente las metas del grupo.  El Realizador necesita combinar sus metas personales con las metas de la organización.  Como el Realizador siempre ha ejercido control sobre los aspectos más importantes de su vida, desarrolla a menudo un fuerte sentido de la responsabilidad. El Realizador demuestra un profundo interés por su trabajo y un continuo e intenso afán por conseguir lo que se propone.   Tiene una alta opinión de su trabajo y suele realizar las cosas por él mismo para asegurarse de que todo esté bien hecho.  Valora el trabajo arduo y bajo presión “prefiere hacer” que delegar en otro.   Cuando delega algo, suele volver ha realizarlo si no satisface sus expectativas.  Su premisa dice: “si tengo éxito, el mérito me corresponde, pero si fracaso, asumo la responsabilidad”. Si el Realizador se comunica más con los demás dejaría de pensar en “esto o lo otro”, del “yo mismo lo tengo que hacer” o “quiero todo el crédito para mí”.  Tal vez necesite ayuda para considerar otras propuestas y conseguir los resultados que desea.  El Realizador sabe que funciona al máximo de su capacidad y espera un reconocimiento similar a su contribución, en ciertas organizaciones mediante ganancias elevadas y en otras con posiciones de mando.",
+    codigos: "7674"
   },
   //3
   {
     nombre: "Patrón del Perfeccionista",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 3: Líder.",
+    aprendizajes_esperados: "Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Competente para hacer bien las cosas, reservado, cauteloso.",
     meta: "Logros estables, predecible.",
     juzga_a_los_demas_por: "Normas precisas.",
@@ -50,8 +52,8 @@ window.patrones = [
   //4
   {
     nombre: "Patrón del Creativo",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Acepta la agresión, puede contenerse al expresarse.",
     meta: "Dominar, logros únicos.",
     juzga_a_los_demas_por: "Sus propias normas, las ideas progresivas al llevar a cabo el trabajo.",
@@ -66,8 +68,8 @@ window.patrones = [
   //5
   {
     nombre: "Patrón del Objetivo",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Puede rechazar la agresión interpersonal.",
     meta: "La exactitud.",
     juzga_a_los_demas_por: "Su capacidad de pensamiento analítico.",
@@ -82,8 +84,8 @@ window.patrones = [
   //6
   {
     nombre: "Patrón del Persuasivo",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Confía en los demás, es entusiasta.",
     meta: "Autoridad y prestigio; diversos símbolos de prestigio.",
     juzga_a_los_demas_por: "Su capacidad de expresión verbal; su flexibilidad.",
@@ -98,8 +100,8 @@ window.patrones = [
   //7
   {
     nombre: "Patrón del Promotor",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 3: Líder.",
+    aprendizajes_esperados: "Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Dispuesto a aceptar a los demás.",
     meta: "Aprobación, popularidad.",
     juzga_a_los_demas_por: "Su forma de expresarse.",
@@ -114,8 +116,8 @@ window.patrones = [
   //8
   {
     nombre: "Patrón del Consejero",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Es fácil de abordar, afectuoso y comprensivo.",
     meta: "La amistad; la felicidad.",
     juzga_a_los_demas_por: "Su aceptación positiva; generalmente busca el lado bueno de las personas.",
@@ -130,8 +132,8 @@ window.patrones = [
   //9
   {
     nombre: "Patrón del Agente",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Acepta el afecto; rechaza la agresión.",
     meta: "Ser aceptado por los demás.",
     juzga_a_los_demas_por: "La tolerancia y participación.",
@@ -146,8 +148,8 @@ window.patrones = [
   //10
   {
     nombre: "Patrón del Evaluador",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Un fuerte impulso por causar buena impresión.",
     meta: "“Ganar” con estilo.",
     juzga_a_los_demas_por: "Su capacidad de tomar iniciativa.",
@@ -162,8 +164,8 @@ window.patrones = [
   //11
   {
     nombre: "Patrón del Resolutivo",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 1: Pasante.\n Nivel 2: Explorador.",
+    aprendizajes_esperados: "Pasante: ¡Prepárate para destacar en el mundo laboral! Al finalizar este curso, estarás listo para describir tu situación laboral con claridad, dar instrucciones efectivas a equipos de trabajo, presentar tu experiencia y formación de manera profesional, y enfrentar entrevistas laborales con seguridad y estrategia. ¡Impulsa tu perfil y abre nuevas oportunidades con habilidades que marcan la diferencia!\n Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!",
     emociones: "Individualista en lo que se refiere a sus necesidades personales.",
     meta: "Una nueva oportunidad; un nuevo reto.",
     juzga_a_los_demas_por: "Su capacidad para alcanzar las normas establecidas por él mismo.",
@@ -178,8 +180,8 @@ window.patrones = [
   //12
   {
     nombre: "Patrón del Profesional",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Quiere mantenerse a la altura de los demás en cuanto a esfuerzo y desempeño técnico.",
     meta: "Profundo afán por el desarrollo personal.",
     juzga_a_los_demas_por: "Su autodisciplina;  sus posiciones y ascensos.",
@@ -194,8 +196,8 @@ window.patrones = [
   //13
   {
     nombre: "Patrón del Investigador",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Desapasionado; autodisciplinado.",
     meta: "El poder que generan la autoridad, la posición y los roles formales.",
     juzga_a_los_demas_por: "El uso de la información objetiva.",
@@ -210,8 +212,8 @@ window.patrones = [
   //14
   {
     nombre: "Patrón del Orientado a Resultados",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 2: Explorador.\nNivel 3: Líder.",
+    aprendizajes_esperados: "Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!\n Líder: ¡Desarrolla habilidades que te posicionan como un profesional integral! Al finalizar este curso, estarás preparado para identificar distintos tipos de liderazgo y presentar planes de acción ante problemas reales, negociar con pares y supervisores para resolver conflictos de manera efectiva, y estructurar un elevator pitch convincente que capte la atención en segundos. ¡Lidera, comunica y resuelve con impacto!",
     emociones: "Una gran expresión verbal de la fuerza del ego; muestra un fuerte individualismo.",
     meta: "Dominio e independencia.",
     juzga_a_los_demas_por: "Su capacidad para realizar las tareas con rapidez.",
@@ -223,11 +225,11 @@ window.patrones = [
     seria_mas_eficaz_si: "Verbalizara su proceso de razonamiento; buscara otros puntos de vista e ideas sobre sus objetivos al resolver problemas; su preocupación por los demás fuera más genuina; fuera más paciente y humilde.",
     descripcion: "El Orientado a Resultados muestra tal confianza en sí mismo que algunos lo interpretan como arrogancia.  Busca sin descanso oportunidades que prueben y desarrollen sus capacidades para alcanzar resultados.  A estas personas les gustan las tareas difíciles, situaciones competitivas, cometidos únicos y puestos “importantes”.  Aceptan la responsabilidad con un aire de “yo lo hago” y,  cuando terminan, de “dije que yo lo podía hacer”. El Orientado a Resultados tiende a evitar factores que lo restrinjan, como controles directos, detalles que le consuman tiempo y trabajos rutinarios.  Enérgico y directo, este individuo puede tener dificultades con los demás.  Por ser tan independiente, el Orientado a Resultados puede impacientarse cuando se ve involucrado en actividades de grupo.  Aunque por lo general prefiere trabajar solo, logra persuadir a otros para que apoyen sus esfuerzos, en especial para completar actividades de rutina. El Orientado a Resultados es rápido de pensamiento y acción.  Se impacienta con quienes son diferentes a él y los critica.  Valora a aquellos que muestran destreza para obtener resultados.  Son determinados y persistentes, incluso frente al antagonismo.  Estas personas, si creen que es necesario, toman el mando de la situación, les corresponda o no.  En su impulso tenaz en busca de resultados, pueden parecer ásperos y desatentos."
   },
-  //14
+  //15
   {
     nombre: "Patrón del Especialista",
-    nivel_onboarding: null,
-    aprendizajes_esperados: null,
+    nivel_onboarding: "Nivel 1: Pasante.\n Nivel 2: Explorador.",
+    aprendizajes_esperados: "Pasante: ¡Prepárate para destacar en el mundo laboral! Al finalizar este curso, estarás listo para describir tu situación laboral con claridad, dar instrucciones efectivas a equipos de trabajo, presentar tu experiencia y formación de manera profesional, y enfrentar entrevistas laborales con seguridad y estrategia. ¡Impulsa tu perfil y abre nuevas oportunidades con habilidades que marcan la diferencia!\n Explorador: ¡Impulsa tu perfil profesional! Al finalizar este curso, estarás preparado para describir con claridad las obligaciones, prohibiciones y aspectos clave de un reglamento interno, crear un currículum vitae que destaque tus fortalezas, presentar propuestas efectivas en reuniones de trabajo, y redactar cartas de presentación que abren puertas. ¡Conviértete en el candidato que todos quieren en su equipo!",
     emociones: "Moderación calculada; afán de servir, de adaptarse a los demás.",
     meta: "Conservar el “status quo”, controlar el ambiente.",
     juzga_a_los_demas_por: "Las normas de amistad, después por su capacidad.",

@@ -152,16 +152,16 @@
     <p id="descripcion"></p>
 
     <h2>Nivel de Onboarding:</h2>
-    <p id="nivel_onboarding"></p>
+    <p id="nivel_onboarding" style="white-space: pre-line;"></p>
 
     <h2>Aprendizajes esperados:</h2>
-    <p id="aprendizajes_esperados"></p>
+    <p id="aprendizajes_esperados" style="white-space: pre-line;"></p>
   </div>
 
   <script src="patrones.js"></script>
   <script>
     // Cargar placeholder desde patrones.js
-    const patron = window.patrones[0];
+    const patron = window.patrones[14];
     for (const key in patron) {
       const el = document.getElementById(key);
       if (el) el.textContent = patron[key];
