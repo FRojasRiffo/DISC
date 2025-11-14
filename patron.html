@@ -160,11 +160,412 @@
 
   <script src="patrones.js"></script>
   <script>
-    // Cargar placeholder desde patrones.js
-    const patron = window.patrones[14];
-    for (const key in patron) {
-      const el = document.getElementById(key);
-      if (el) el.textContent = patron[key];
+    // Función para calcular segmentos desde los resultados (fallback)
+    function calculateSegmentsFromResults() {
+      try {
+        // Intentar obtener resultados de múltiples fuentes
+        let resultsStr = null;
+        
+        // 1. Intentar de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const resultsParam = urlParams.get("results");
+        if (resultsParam) {
+          resultsStr = decodeURIComponent(resultsParam);
+          console.log("discResults obtenidos de la URL");
+        }
+        
+        // 2. Intentar de sessionStorage
+        if (!resultsStr) {
+          resultsStr = sessionStorage.getItem("discResults");
+          if (resultsStr) {
+            console.log("discResults obtenidos de sessionStorage");
+          }
+        }
+        
+        // 3. Intentar de localStorage
+        if (!resultsStr) {
+          resultsStr = localStorage.getItem("discResults");
+          if (resultsStr) {
+            console.log("discResults obtenidos de localStorage");
+          }
+        }
+        
+        console.log("discResults encontrados:", resultsStr);
+        
+        if (!resultsStr) {
+          console.error("No se encontró discResults en ninguna fuente");
+          return null;
+        }
+
+        const results = JSON.parse(resultsStr);
+        console.log("Resultados parseados:", results);
+        
+        // Verificar que los resultados tengan las propiedades necesarias
+        if (!results || typeof results.D === 'undefined' || typeof results.I === 'undefined' || 
+            typeof results.S === 'undefined' || typeof results.C === 'undefined') {
+          console.error("Los resultados no tienen las propiedades D, I, S, C:", results);
+          return null;
+        }
+
+        const displayOffset = { D: -4, I: -4, S: -5, C: -4 };
+        
+        const displayScores = {
+          D: results.D + displayOffset.D,
+          I: results.I + displayOffset.I,
+          S: results.S + displayOffset.S,
+          C: results.C + displayOffset.C
+        };
+        
+        console.log("Display scores calculados:", displayScores);
+
+        // Copiar las funciones de cálculo de segmentos desde disc.js
+        const scoreToIntensityMap = {
+          D: {
+            28: 28, 27: 12, 26: null, 25: 9, 24: 8, 23: 7, 22: 6, 21: 5, 20: 4,
+            19: 3, 18: null, 17: 2, 16: 1, 15: 0, 14: 0, 13: null, 12: -1,
+            11: -2, 10: null, 9: -3, 8: -4, 7: -5, 6: -6, 5: -7, 4: -8,
+            3: null, 2: -11, 1: -28
+          },
+          I: {
+            28: 28, 27: 10, 26: null, 25: 7, 24: 6, 23: 5, 22: 4, 21: null, 20: 3,
+            19: null, 18: 2, 17: null, 16: 1, 15: 0, 14: null, 13: -1, 12: -2,
+            11: null, 10: -3, 9: null, 8: -4, 7: -5, 6: -6, 5: -7, 4: -8,
+            3: null, 2: -11, 1: -28
+          },
+          S: {
+            28: 28, 27: 10, 26: null, 25: 8, 24: 7, 23: 6, 22: 4, 21: 3, 20: 2,
+            19: 1, 18: null, 17: 0, 16: -1, 15: -2, 14: null, 13: -3, 12: -4,
+            11: -5, 10: null, 9: -6, 8: -7, 7: -8, 6: -9, 5: -10, 4: -11,
+            3: null, 2: -13, 1: -28
+          },
+          C: {
+            28: 28, 27: 11, 26: null, 25: 9, 24: 8, 23: 7, 22: 6, 21: 5, 20: 4,
+            19: null, 18: 3, 17: null, 16: 2, 15: 1, 14: null, 13: 0, 12: -1,
+            11: null, 10: -2, 9: null, 8: -3, 7: -4, 6: null, 5: -5, 4: -6,
+            3: null, 2: -11, 1: -28
+          }
+        };
+
+        function getIntensityFromScore(score, type) {
+          const map = scoreToIntensityMap[type];
+          if (!map) return 15;
+
+          let closestIntensity = 15;
+          let minDiff = Infinity;
+
+          for (const [intensity, mappedScore] of Object.entries(map)) {
+            if (mappedScore === null) continue;
+            const diff = Math.abs(mappedScore - score);
+            if (diff < minDiff) {
+              minDiff = diff;
+              closestIntensity = parseInt(intensity);
+            }
+            if (mappedScore === score) return parseInt(intensity);
+          }
+
+          return closestIntensity;
+        }
+
+        function getSegmentFromIntensity(intensity, type) {
+          const map = {
+            D: {
+              28: 7, 27: 7, 26: 7, 25: 7,
+              24: 6, 23: 6, 22: 6, 21: 6, 
+              20: 5, 19: 5, 18: 5, 17: 5,
+              16: 4, 15: 4, 14: 4, 13: 4,
+              12: 3, 11: 3, 10: 3, 9: 3,
+              8: 2, 7: 2, 6: 2, 5: 2,
+              4: 1, 3: 1, 2: 1, 1: 1
+            },
+            I: {
+              28: 7, 27: 7, 26: 6, 25: 7,
+              24: 6, 23: 6, 22: 6, 21: 6, 
+              20: 5, 19: 5, 18: 5, 17: 5,
+              16: 4, 15: 4, 14: 4, 13: 4,
+              12: 3, 11: 3, 10: 3, 9: 3,
+              8: 2, 7: 2, 6: 2, 5: 2,
+              4: 1, 3: 1, 2: 1, 1: 1
+            },
+            S: {
+              28: 7, 27: 7, 26: 6, 25: 7,
+              24: 6, 23: 6, 22: 6, 21: 6, 
+              20: 5, 19: 5, 18: 5, 17: 5,
+              16: 4, 15: 4, 14: 4, 13: 4,
+              12: 3, 11: 3, 10: 3, 9: 3,
+              8: 2, 7: 2, 6: 2, 5: 2,
+              4: 1, 3: 1, 2: 1, 1: 1
+            },
+            C: {
+              28: 7, 27: 7, 26: 6, 25: 7,
+              24: 6, 23: 6, 22: 6, 21: 6, 
+              20: 5, 19: 5, 18: 5, 17: 5,
+              16: 4, 15: 4, 14: 4, 13: 4,
+              12: 3, 11: 3, 10: 3, 9: 3,
+              8: 2, 7: 2, 6: 2, 5: 2,
+              4: 1, 3: 1, 2: 1, 1: 1
+            }
+          };
+          return map[type]?.[intensity] ?? 1;
+        }
+
+        function getSegmentFromScore(score, type) {
+          const intensity = getIntensityFromScore(score, type);
+          const segment = getSegmentFromIntensity(intensity, type);
+          console.log(`  ${type}: score=${score}, intensity=${intensity}, segment=${segment}`);
+          return segment;
+        }
+
+        const segments = {
+          D: getSegmentFromScore(displayScores.D, 'D'),
+          I: getSegmentFromScore(displayScores.I, 'I'),
+          S: getSegmentFromScore(displayScores.S, 'S'),
+          C: getSegmentFromScore(displayScores.C, 'C')
+        };
+        
+        console.log("Segmentos calculados exitosamente:", segments);
+        return segments;
+      } catch (error) {
+        console.error("Error calculando segmentos:", error);
+        console.error("Stack trace:", error.stack);
+        return null;
+      }
+    }
+
+    // Función para buscar el patrón según el código de 4 dígitos
+    function findPatronByCode(code) {
+      if (!window.patrones || !Array.isArray(window.patrones)) {
+        console.error("No se encontraron patrones o no es un array");
+        return null;
+      }
+
+      console.log("Buscando código:", code, "en", window.patrones.length, "patrones");
+
+      // Buscar en cada patrón si el código está en su lista de códigos
+      for (let i = 0; i < window.patrones.length; i++) {
+        const patron = window.patrones[i];
+        if (patron && patron.codigo) {
+          // Dividir los códigos por comas y espacios, y buscar coincidencia exacta
+          const codigos = patron.codigo.split(/[,\s]+/).filter(c => c.trim() !== '');
+          
+          // Debug: mostrar algunos códigos del primer patrón para verificar
+          if (i === 0 && codigos.length > 0) {
+            console.log("Ejemplo de códigos del primer patrón (primeros 5):", codigos.slice(0, 5));
+          }
+          
+          if (codigos.includes(code)) {
+            console.log("✓ Patrón encontrado en índice", i, ":", patron.nombre);
+            console.log("  Código buscado:", code, "coincide con uno de los códigos del patrón");
+            return patron;
+          }
+        }
+      }
+      
+      console.log("✗ No se encontró patrón para código:", code);
+      console.log("  Verificando códigos disponibles en los primeros 3 patrones...");
+      for (let i = 0; i < Math.min(3, window.patrones.length); i++) {
+        const patron = window.patrones[i];
+        if (patron && patron.codigo) {
+          const codigos = patron.codigo.split(/[,\s]+/).filter(c => c.trim() !== '').slice(0, 10);
+          console.log(`  Patrón ${i + 1} (${patron.nombre}): primeros códigos:`, codigos.join(", "));
+        }
+      }
+      return null;
+    }
+
+    // Obtener los segmentos de localStorage o calcularlos
+    function loadPatron() {
+      try {
+        // Verificar si localStorage está disponible
+        if (typeof(Storage) === "undefined") {
+          throw new Error("localStorage no está disponible en este navegador.");
+        }
+        
+        // Verificar el protocolo
+        console.log("Protocolo actual:", window.location.protocol);
+        if (window.location.protocol === "file:") {
+          console.warn("Advertencia: Se está usando el protocolo file://. Algunos navegadores pueden tener restricciones con localStorage.");
+        }
+        
+        // Esperar a que patrones.js se cargue
+        if (!window.patrones) {
+          console.log("Esperando a que se cargue patrones.js...");
+          setTimeout(loadPatron, 100);
+          return;
+        }
+
+        // Listar todas las claves en localStorage para debug
+        console.log("Todas las claves en localStorage:", Object.keys(localStorage));
+        console.log("Todas las claves en sessionStorage:", Object.keys(sessionStorage || {}));
+        
+        let segments = null;
+        
+        // 1. Intentar leer de los parámetros de la URL primero (más confiable con file://)
+        const urlParams = new URLSearchParams(window.location.search);
+        const segmentsParam = urlParams.get("segments");
+        if (segmentsParam) {
+          try {
+            segments = JSON.parse(decodeURIComponent(segmentsParam));
+            console.log("✓ Segmentos obtenidos de la URL:", segments);
+            // Guardar en localStorage y sessionStorage para futuras referencias
+            try {
+              localStorage.setItem("discSegments", JSON.stringify(segments));
+              sessionStorage.setItem("discSegments", JSON.stringify(segments));
+            } catch (e) {
+              console.warn("No se pudieron guardar los segmentos:", e);
+            }
+          } catch (e) {
+            console.error("Error parseando segmentos de la URL:", e);
+          }
+        }
+        
+        // 2. Si no hay en la URL, intentar leer de sessionStorage
+        if (!segments) {
+          const segmentsStr = sessionStorage.getItem("discSegments");
+          if (segmentsStr) {
+            try {
+              segments = JSON.parse(segmentsStr);
+              console.log("✓ Segmentos encontrados en sessionStorage:", segments);
+            } catch (e) {
+              console.error("Error parseando segmentos de sessionStorage:", e);
+            }
+          }
+        }
+        
+        // 3. Si no hay en sessionStorage, intentar leer de localStorage
+        if (!segments) {
+          const segmentsStr = localStorage.getItem("discSegments");
+          if (segmentsStr) {
+            try {
+              segments = JSON.parse(segmentsStr);
+              console.log("✓ Segmentos encontrados en localStorage:", segments);
+            } catch (e) {
+              console.error("Error parseando segmentos de localStorage:", e);
+            }
+          }
+        }
+
+        // 4. Si no hay segmentos guardados, intentar calcularlos desde los resultados
+        if (!segments) {
+          console.log("No hay segmentos guardados, calculando desde resultados...");
+          
+          // Intentar obtener resultados de la URL
+          const resultsParam = urlParams.get("results");
+          if (resultsParam) {
+            try {
+              const results = JSON.parse(decodeURIComponent(resultsParam));
+              console.log("Resultados obtenidos de la URL:", results);
+              // Guardar en localStorage
+              try {
+                localStorage.setItem("discResults", JSON.stringify(results));
+                sessionStorage.setItem("discResults", JSON.stringify(results));
+              } catch (e) {
+                console.warn("No se pudieron guardar los resultados:", e);
+              }
+            } catch (e) {
+              console.error("Error parseando resultados de la URL:", e);
+            }
+          }
+          
+          segments = calculateSegmentsFromResults();
+          if (segments) {
+            console.log("✓ Segmentos calculados exitosamente:", segments);
+            // Guardar los segmentos calculados para futuras referencias
+            try {
+              localStorage.setItem("discSegments", JSON.stringify(segments));
+              sessionStorage.setItem("discSegments", JSON.stringify(segments));
+            } catch (e) {
+              console.warn("No se pudieron guardar los segmentos calculados:", e);
+            }
+          } else {
+            console.error("✗ No se pudieron calcular los segmentos desde los resultados");
+            // Verificar qué hay en localStorage
+            console.log("Contenido de localStorage:");
+            console.log("  discResults:", localStorage.getItem("discResults"));
+            console.log("  discSegments:", localStorage.getItem("discSegments"));
+            console.log("  discDisplayScores:", localStorage.getItem("discDisplayScores"));
+            console.log("Contenido de sessionStorage:");
+            console.log("  discResults:", sessionStorage.getItem("discResults"));
+            console.log("  discSegments:", sessionStorage.getItem("discSegments"));
+          }
+        }
+
+        if (!segments) {
+          throw new Error("No se pudieron obtener los segmentos. Por favor, complete el test nuevamente.");
+        }
+        
+        // Formar el código de 4 dígitos: D, I, S, C
+        const code = `${segments.D}${segments.I}${segments.S}${segments.C}`;
+        
+        console.log("Buscando patrón con código:", code);
+        console.log("Segmentos:", segments);
+
+        // Buscar el patrón
+        const patron = findPatronByCode(code);
+        
+        if (!patron) {
+          // Si no se encuentra, mostrar un mensaje de error más amigable
+          const container = document.querySelector(".container");
+          container.innerHTML = `
+            <h1>Patrón no encontrado</h1>
+            <p>No se encontró un patrón para el código <code>${code}</code>.</p>
+            <div class="meta">
+              <p><strong>Segmentos obtenidos:</strong></p>
+              <p>D: ${segments.D}, I: ${segments.I}, S: ${segments.S}, C: ${segments.C}</p>
+              <p><strong>Código formado:</strong> ${code}</p>
+              <p><strong>Total de patrones disponibles:</strong> ${window.patrones ? window.patrones.length : 0}</p>
+            </div>
+            <p style="margin-top: 20px;">
+              <a href="index.html" style="color: #5fa890; text-decoration: underline;">Volver al test</a>
+            </p>
+          `;
+          return;
+        }
+
+        // Renderizar el patrón encontrado
+        console.log("Patrón encontrado:", patron.nombre);
+        
+        // Mapear los campos del patrón a los elementos del DOM
+        const fieldMapping = {
+          nombre: "nombre",
+          emociones: "emociones",
+          meta: "meta",
+          juzga_a_los_demas_por: "juzga_a_los_demas_por",
+          influye_en_los_demas_mediante: "influye_en_los_demas_mediante",
+          valor_para_la_organizacion: "valor_para_la_organizacion",
+          abusa_de: "abusa_de",
+          bajo_presion: "bajo_presion",
+          teme: "teme",
+          seria_mas_eficaz_si: "seria_mas_eficaz_si",
+          descripcion: "descripcion",
+          nivel_onboarding: "nivel_onboarding",
+          aprendizajes_esperados: "aprendizajes_esperados"
+        };
+
+        for (const [key, elementId] of Object.entries(fieldMapping)) {
+          const el = document.getElementById(elementId);
+          if (el && patron[key] !== undefined) {
+            el.textContent = patron[key];
+          }
+        }
+
+      } catch (error) {
+        console.error("Error al cargar el patrón:", error);
+        const container = document.querySelector(".container");
+        container.innerHTML = `
+          <h1>Error al cargar el patrón</h1>
+          <p>${error.message || "Ocurrió un error al procesar los resultados del test."}</p>
+          <p style="margin-top: 20px;">
+            <a href="index.html" style="color: #5fa890; text-decoration: underline;">Volver al test</a>
+          </p>
+        `;
+      }
+    }
+
+    // Cargar el patrón cuando la página esté lista
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadPatron);
+    } else {
+      loadPatron();
     }
   </script>
 </body>

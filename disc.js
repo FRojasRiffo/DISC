@@ -11,35 +11,36 @@ document.addEventListener("DOMContentLoaded", () => {
   function getSegmentFromIntensity(intensity, type) {
     const map = {
       D: {
-        28: 7, 27: 7, 26: 7,
-        25: 6, 24: 6, 23: 6, 22: 6, 21: 6, 20: 6,
-        19: 5, 18: 5, 17: 5,
+        28: 7, 27: 7, 26: 7, 25: 7,
+        24: 6, 23: 6, 22: 6, 21: 6, 
+        20: 5, 19: 5, 18: 5, 17: 5,
         16: 4, 15: 4, 14: 4, 13: 4,
         12: 3, 11: 3, 10: 3, 9: 3,
         8: 2, 7: 2, 6: 2, 5: 2,
         4: 1, 3: 1, 2: 1, 1: 1
       },
       I: {
-        28: 7, 27: 7, 26: 6,
-        25: 6, 24: 6, 23: 6, 22: 6, 21: 6, 20: 5,
-        19: 5, 18: 5, 17: 4, 16: 4, 15: 4, 14: 4,
-        13: 3, 12: 3, 11: 3, 10: 3,
-        9: 2, 8: 2, 7: 2, 6: 2,
-        5: 1, 4: 1, 3: 1, 2: 1, 1: 1
+        28: 7, 27: 7, 26: 6, 25: 7,
+        24: 6, 23: 6, 22: 6, 21: 6, 
+        20: 5, 19: 5, 18: 5, 17: 5,
+        16: 4, 15: 4, 14: 4, 13: 4,
+        12: 3, 11: 3, 10: 3, 9: 3,
+        8: 2, 7: 2, 6: 2, 5: 2,
+        4: 1, 3: 1, 2: 1, 1: 1
       },
       S: {
-        28: 7, 27: 7, 26: 7,
-        25: 6, 24: 6, 23: 6, 22: 6, 21: 6, 20: 6,
-        19: 5, 18: 5, 17: 5,
+        28: 7, 27: 7, 26: 6, 25: 7,
+        24: 6, 23: 6, 22: 6, 21: 6, 
+        20: 5, 19: 5, 18: 5, 17: 5,
         16: 4, 15: 4, 14: 4, 13: 4,
         12: 3, 11: 3, 10: 3, 9: 3,
         8: 2, 7: 2, 6: 2, 5: 2,
         4: 1, 3: 1, 2: 1, 1: 1
       },
       C: {
-        28: 7, 27: 7, 26: 7,
-        25: 6, 24: 6, 23: 6, 22: 6, 21: 6, 20: 6,
-        19: 5, 18: 5, 17: 5,
+        28: 7, 27: 7, 26: 6, 25: 7,
+        24: 6, 23: 6, 22: 6, 21: 6, 
+        20: 5, 19: 5, 18: 5, 17: 5,
         16: 4, 15: 4, 14: 4, 13: 4,
         12: 3, 11: 3, 10: 3, 9: 3,
         8: 2, 7: 2, 6: 2, 5: 2,
@@ -234,8 +235,81 @@ document.addEventListener("DOMContentLoaded", () => {
       results[less.value]--;
     }
 
-    localStorage.setItem("discResults", JSON.stringify(results));
-    window.location.href = "patron.html";
+    // Calcular los puntajes con offset para display
+    const displayScores = {
+      D: results.D + displayOffset.D,
+      I: results.I + displayOffset.I,
+      S: results.S + displayOffset.S,
+      C: results.C + displayOffset.C
+    };
+
+    // Calcular los segmentos
+    const segments = {
+      D: getSegmentFromScore(displayScores.D, 'D'),
+      I: getSegmentFromScore(displayScores.I, 'I'),
+      S: getSegmentFromScore(displayScores.S, 'S'),
+      C: getSegmentFromScore(displayScores.C, 'C')
+    };
+
+    // Guardar resultados y segmentos en localStorage
+    console.log("Guardando resultados en localStorage:");
+    console.log("  results:", results);
+    console.log("  segments:", segments);
+    console.log("  displayScores:", displayScores);
+    
+    try {
+      // Intentar guardar en localStorage
+      localStorage.setItem("discResults", JSON.stringify(results));
+      localStorage.setItem("discSegments", JSON.stringify(segments));
+      localStorage.setItem("discDisplayScores", JSON.stringify(displayScores));
+      
+      // También guardar en sessionStorage como respaldo
+      try {
+        sessionStorage.setItem("discResults", JSON.stringify(results));
+        sessionStorage.setItem("discSegments", JSON.stringify(segments));
+        sessionStorage.setItem("discDisplayScores", JSON.stringify(displayScores));
+        console.log("Datos también guardados en sessionStorage");
+      } catch (e) {
+        console.warn("No se pudo guardar en sessionStorage:", e);
+      }
+      
+      // Verificar que se guardaron correctamente
+      console.log("Verificando datos guardados:");
+      console.log("  localStorage discResults:", localStorage.getItem("discResults"));
+      console.log("  localStorage discSegments:", localStorage.getItem("discSegments"));
+      
+      // Pequeño delay para asegurar que los datos se guarden antes de redirigir
+      setTimeout(() => {
+        // Verificar una vez más antes de redirigir
+        const verifyResults = localStorage.getItem("discResults");
+        const verifySegments = localStorage.getItem("discSegments");
+        console.log("Verificación final antes de redirigir:");
+        console.log("  discResults:", verifyResults);
+        console.log("  discSegments:", verifySegments);
+        
+        // Si localStorage falla, intentar pasar los datos por URL
+        if (!verifyResults || !verifySegments) {
+          console.warn("localStorage no funcionó, pasando datos por URL");
+          const params = new URLSearchParams({
+            segments: JSON.stringify(segments),
+            results: JSON.stringify(results)
+          });
+          window.location.href = "patron.html?" + params.toString();
+          return;
+        }
+        
+        window.location.href = "patron.html";
+      }, 100);
+    } catch (error) {
+      console.error("Error al guardar en localStorage:", error);
+      // Si localStorage falla, pasar los datos por URL
+      console.log("Intentando pasar datos por URL como respaldo");
+      const params = new URLSearchParams({
+        segments: JSON.stringify(segments),
+        results: JSON.stringify(results)
+      });
+      window.location.href = "patron.html?" + params.toString();
+    }
   });
 
   updateScoreCounter();
