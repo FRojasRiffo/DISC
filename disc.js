@@ -110,12 +110,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const question = document.createElement("div");
     question.classList.add("question");
     question.innerHTML = `
-      <h3>Group ${groupIndex}</h3>
+      <h3>Grupo ${groupIndex}</h3>
       <table>
-        <tr><th>Word</th><th>Más</th><th>Menos</th></tr>
+        <tr><th>Frase</th><th>Más</th><th>Menos</th></tr>
         ${words.slice(i, i + 4).map((word, j) => `
           <tr>
-            <td>${word.text}</td>
+            <td>
+              <span class="word-with-tooltip">
+                ${word.text}
+                <span class="tooltip-icon" data-description="${word.descripcion || ''}" data-word="${word.text}" tabindex="0" role="button" aria-label="Ver definición de ${word.text}">ⓘ</span>
+              </span>
+            </td>
             <td><input type="radio" class="mas" name="more_${groupIndex}" data-group="${groupIndex}" data-word="${i+j}" value="${word.type}" required></td>
             <td><input type="radio" class="menos" name="less_${groupIndex}" data-group="${groupIndex}" data-word="${i+j}" value="${word.type}" required></td>
           </tr>
@@ -123,6 +128,105 @@ document.addEventListener("DOMContentLoaded", () => {
       </table>`;
     form.appendChild(question);
   }
+
+  // --- Funcionalidad de tooltips ---
+  function createTooltip(iconElement) {
+    const description = iconElement.getAttribute('data-description');
+    const word = iconElement.getAttribute('data-word');
+    
+    if (!description) return;
+
+    // Cerrar tooltip existente si hay uno abierto
+    const existingTooltip = document.querySelector('.tooltip-overlay');
+    if (existingTooltip) {
+      existingTooltip.remove();
+    }
+
+    // Crear overlay oscuro
+    const overlay = document.createElement('div');
+    overlay.className = 'tooltip-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'tooltip-word');
+
+    // Crear tooltip
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip-content';
+    tooltip.innerHTML = `
+      <div class="tooltip-header">
+        <span id="tooltip-word" class="tooltip-word">${word}</span>
+        <button class="tooltip-close" aria-label="Cerrar tooltip" tabindex="0">×</button>
+      </div>
+      <div class="tooltip-description">${description}</div>
+    `;
+
+    overlay.appendChild(tooltip);
+    document.body.appendChild(overlay);
+
+    // Función para cerrar el tooltip
+    const closeTooltip = () => {
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        overlay.remove();
+      }, 200);
+    };
+
+    // Event listeners para cerrar
+    const closeBtn = tooltip.querySelector('.tooltip-close');
+    closeBtn.addEventListener('click', closeTooltip);
+    closeBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeTooltip();
+      }
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeTooltip();
+      }
+    });
+
+    overlay.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeTooltip();
+      }
+    });
+
+    // Enfocar el botón de cerrar para accesibilidad
+    closeBtn.focus();
+
+    // Animación de entrada
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+    }, 10);
+  }
+
+  // Agregar event listeners a todos los íconos de tooltip
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('tooltip-icon')) {
+      e.preventDefault();
+      e.stopPropagation();
+      createTooltip(e.target);
+    }
+  });
+
+  // Soporte para touch
+  document.addEventListener('touchend', (e) => {
+    if (e.target.classList.contains('tooltip-icon')) {
+      e.preventDefault();
+      e.stopPropagation();
+      createTooltip(e.target);
+    }
+  });
+
+  // Soporte para teclado (Enter y Espacio)
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('tooltip-icon')) {
+      e.preventDefault();
+      createTooltip(e.target);
+    }
+  });
 
   // --- Cálculo de puntajes ---
   function calculateScores() {
