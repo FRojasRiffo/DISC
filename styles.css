@@ -387,33 +387,63 @@ button:active {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   font-size: 14px;
   color: #7fb8a3;
   cursor: pointer;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
   border-radius: 50%;
   transition: all 0.2s ease;
   flex-shrink: 0;
   line-height: 1;
   font-weight: 600;
+  position: relative;
+  /* Área táctil más grande en móviles */
+  padding: 4px;
+  margin: -4px;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
 }
 
 .tooltip-icon:hover {
   color: #5fa890;
-  background-color: rgba(127, 184, 163, 0.1);
-  transform: scale(1.1);
+  background-color: rgba(127, 184, 163, 0.15);
+  transform: scale(1.15);
 }
 
 .tooltip-icon:active {
-  transform: scale(0.95);
+  transform: scale(0.9);
+  background-color: rgba(127, 184, 163, 0.25);
 }
 
 .tooltip-icon:focus {
   outline: 2px solid #7fb8a3;
   outline-offset: 2px;
   border-radius: 50%;
+}
+
+/* Mejorar visibilidad en móviles */
+@media (max-width: 768px) {
+  .tooltip-icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    font-size: 16px;
+    padding: 6px;
+    margin: -6px;
+    color: #5fa890;
+    background-color: rgba(127, 184, 163, 0.1);
+  }
+  
+  .tooltip-icon:active {
+    background-color: rgba(127, 184, 163, 0.3);
+  }
 }
 
 /* Tooltip Overlay */
@@ -423,15 +453,20 @@ button:active {
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
+  z-index: 99999;
   padding: 20px;
   opacity: 0;
   transition: opacity 0.2s ease;
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tooltip-content {
@@ -480,8 +515,10 @@ button:active {
   line-height: 1;
   cursor: pointer;
   padding: 0;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -489,15 +526,20 @@ button:active {
   transition: all 0.2s ease;
   font-weight: 300;
   flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  /* Área táctil más grande */
+  margin: -4px;
 }
 
 .tooltip-close:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
   transform: scale(1.1);
 }
 
 .tooltip-close:active {
-  transform: scale(0.95);
+  transform: scale(0.9);
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .tooltip-close:focus {
@@ -532,10 +574,12 @@ button:active {
     font-size: 0.95em;
   }
 
-  .tooltip-icon {
-    width: 16px;
-    height: 16px;
-    font-size: 12px;
+  .tooltip-close {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 36px;
   }
 }
 

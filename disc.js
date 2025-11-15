@@ -130,11 +130,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Funcionalidad de tooltips ---
+  let touchStartTime = 0;
+  let touchTarget = null;
+
+  // Función auxiliar para escapar HTML
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
   function createTooltip(iconElement) {
     const description = iconElement.getAttribute('data-description');
     const word = iconElement.getAttribute('data-word');
     
-    if (!description) return;
+    if (!description || description.trim() === '') {
+      console.log('No description found for:', word);
+      return;
+    }
 
     // Cerrar tooltip existente si hay uno abierto
     const existingTooltip = document.querySelector('.tooltip-overlay');
@@ -149,31 +162,38 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-labelledby', 'tooltip-word');
 
-    // Crear tooltip
+    // Crear tooltip con contenido escapado
     const tooltip = document.createElement('div');
     tooltip.className = 'tooltip-content';
     tooltip.innerHTML = `
       <div class="tooltip-header">
-        <span id="tooltip-word" class="tooltip-word">${word}</span>
+        <span id="tooltip-word" class="tooltip-word">${escapeHtml(word)}</span>
         <button class="tooltip-close" aria-label="Cerrar tooltip" tabindex="0">×</button>
       </div>
-      <div class="tooltip-description">${description}</div>
+      <div class="tooltip-description">${escapeHtml(description)}</div>
     `;
 
     overlay.appendChild(tooltip);
     document.body.appendChild(overlay);
 
     // Función para cerrar el tooltip
-    const closeTooltip = () => {
+    const closeTooltip = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       overlay.style.opacity = '0';
       setTimeout(() => {
-        overlay.remove();
+        if (overlay.parentNode) {
+          overlay.remove();
+        }
       }, 200);
     };
 
     // Event listeners para cerrar
     const closeBtn = tooltip.querySelector('.tooltip-close');
     closeBtn.addEventListener('click', closeTooltip);
+    closeBtn.addEventListener('touchend', closeTooltip);
     closeBtn.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -183,7 +203,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
-        closeTooltip();
+        closeTooltip(e);
+      }
+    });
+
+    overlay.addEventListener('touchend', (e) => {
+      if (e.target === overlay) {
+        closeTooltip(e);
       }
     });
 
@@ -193,40 +219,86 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Enfocar el botón de cerrar para accesibilidad
-    closeBtn.focus();
+    // Enfocar el botón de cerrar para accesibilidad (solo en desktop)
+    if (window.innerWidth > 768) {
+      closeBtn.focus();
+    }
 
     // Animación de entrada
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       overlay.style.opacity = '1';
-    }, 10);
+    });
   }
 
-  // Agregar event listeners a todos los íconos de tooltip
-  document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('tooltip-icon')) {
-      e.preventDefault();
-      e.stopPropagation();
-      createTooltip(e.target);
+  // Función para manejar la activación del tooltip
+  function handleTooltipActivation(element) {
+    if (!element || !element.classList.contains('tooltip-icon')) {
+      return;
     }
-  });
+    
+    // Prevenir que se active múltiples veces rápidamente
+    if (element.dataset.processing === 'true') {
+      return;
+    }
+    
+    element.dataset.processing = 'true';
+    createTooltip(element);
+    
+    setTimeout(() => {
+      element.dataset.processing = 'false';
+    }, 300);
+  }
 
-  // Soporte para touch
-  document.addEventListener('touchend', (e) => {
-    if (e.target.classList.contains('tooltip-icon')) {
+  // Usar delegación de eventos para mejor rendimiento y compatibilidad móvil
+  form.addEventListener('click', (e) => {
+    const icon = e.target.closest('.tooltip-icon');
+    if (icon) {
       e.preventDefault();
       e.stopPropagation();
-      createTooltip(e.target);
+      handleTooltipActivation(icon);
     }
-  });
+  }, true);
+
+  // Manejo mejorado de eventos táctiles
+  form.addEventListener('touchstart', (e) => {
+    const icon = e.target.closest('.tooltip-icon');
+    if (icon) {
+      touchStartTime = Date.now();
+      touchTarget = icon;
+      icon.style.transform = 'scale(0.9)';
+    }
+  }, { passive: true });
+
+  form.addEventListener('touchend', (e) => {
+    const icon = e.target.closest('.tooltip-icon');
+    if (icon && icon === touchTarget) {
+      const touchDuration = Date.now() - touchStartTime;
+      // Solo activar si fue un tap rápido (menos de 300ms)
+      if (touchDuration < 300) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleTooltipActivation(icon);
+      }
+      icon.style.transform = '';
+      touchTarget = null;
+    }
+  }, { passive: false });
+
+  form.addEventListener('touchcancel', (e) => {
+    const icon = e.target.closest('.tooltip-icon');
+    if (icon) {
+      icon.style.transform = '';
+      touchTarget = null;
+    }
+  }, { passive: true });
 
   // Soporte para teclado (Enter y Espacio)
-  document.addEventListener('keydown', (e) => {
+  form.addEventListener('keydown', (e) => {
     if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('tooltip-icon')) {
       e.preventDefault();
-      createTooltip(e.target);
+      handleTooltipActivation(e.target);
     }
-  });
+  }, true);
 
   // --- Cálculo de puntajes ---
   function calculateScores() {
