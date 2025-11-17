@@ -19,6 +19,8 @@
       min-height: 100vh;
       color: #222;
       line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
     }
     .container {
       background: rgba(255, 255, 255, 0.95);
@@ -26,8 +28,10 @@
       border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
       max-width: 800px;
+      width: 100%;
       margin: auto;
       backdrop-filter: blur(10px);
+      box-sizing: border-box;
     }
     h1 {
       text-align: center;
@@ -137,6 +141,189 @@
       color: #721c24;
       border: 1px solid #f5c6cb;
       display: block;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px;
+      }
+      
+      .container {
+        padding: 25px 20px;
+        border-radius: 15px;
+      }
+      
+      h1 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+      }
+      
+      h2 {
+        font-size: 1.2em;
+        margin-top: 25px;
+        padding-left: 12px;
+      }
+      
+      p {
+        font-size: 0.95em;
+        margin-bottom: 12px;
+      }
+      
+      .logo-header {
+        margin-bottom: 20px;
+      }
+      
+      .logo-header div {
+        width: 100px !important;
+        height: 100px !important;
+      }
+      
+      .email-form {
+        margin-top: 30px;
+        padding: 20px;
+      }
+      
+      .email-form h2 {
+        font-size: 1.2em;
+      }
+      
+      .form-group input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 14px 15px;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      
+      .btn-send {
+        padding: 14px 20px;
+        font-size: 15px;
+        min-height: 48px; /* Touch-friendly button size */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+      
+      .meta {
+        padding: 12px;
+        font-size: 0.9em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px 8px;
+      }
+      
+      .container {
+        padding: 20px 15px;
+        border-radius: 12px;
+      }
+      
+      h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        line-height: 1.3;
+      }
+      
+      h2 {
+        font-size: 1.1em;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        padding-left: 10px;
+        border-left-width: 3px;
+      }
+      
+      p {
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+      
+      .logo-header {
+        margin-bottom: 15px;
+      }
+      
+      .logo-header div {
+        width: 80px !important;
+        height: 80px !important;
+      }
+      
+      .email-form {
+        margin-top: 25px;
+        padding: 15px;
+      }
+      
+      .email-form h2 {
+        font-size: 1.1em;
+        margin-top: 0;
+      }
+      
+      .email-form p {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+      }
+      
+      .form-group {
+        margin-bottom: 15px;
+      }
+      
+      .form-group label {
+        font-size: 0.95em;
+        margin-bottom: 6px;
+      }
+      
+      .form-group input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px 12px;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      
+      .btn-send {
+        padding: 14px 15px;
+        font-size: 14px;
+        min-height: 48px;
+        letter-spacing: 0.5px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+      
+      .message {
+        padding: 10px;
+        font-size: 0.9em;
+      }
+      
+      .meta {
+        padding: 10px;
+        font-size: 0.85em;
+        margin-top: 20px;
+        margin-bottom: 15px;
+      }
+      
+      code {
+        font-size: 0.85em;
+        padding: 2px 4px;
+        word-break: break-word;
+      }
+    }
+
+    /* Prevent text overflow on very small screens */
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 1.3em;
+      }
+      
+      h2 {
+        font-size: 1em;
+      }
+      
+      p {
+        font-size: 0.85em;
+      }
+      
+      .container {
+        padding: 15px 12px;
+      }
     }
   </style>
   <link rel="stylesheet" href="results.css" />
