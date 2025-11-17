@@ -96,7 +96,8 @@
       color: #2c2c2c;
       font-weight: 500;
     }
-    .form-group input {
+    .form-group input,
+    .form-group select {
       width: 100%;
       padding: 12px 15px;
       border: 2px solid #d4e8e0;
@@ -106,8 +107,10 @@
       transition: border-color 0.2s ease;
       /* Performance optimizations */
       transform: translateZ(0);
+      background-color: white;
     }
-    .form-group input:focus {
+    .form-group input:focus,
+    .form-group select:focus {
       outline: none;
       border-color: #5fa890;
     }
@@ -211,7 +214,8 @@
         font-size: 1.2em;
       }
       
-      .form-group input {
+      .form-group input,
+      .form-group select {
         font-size: 16px; /* Prevents zoom on iOS */
         padding: 14px 15px;
         -webkit-appearance: none;
@@ -298,7 +302,8 @@
         margin-bottom: 6px;
       }
       
-      .form-group input {
+      .form-group input,
+      .form-group select {
         font-size: 16px; /* Prevents zoom on iOS */
         padding: 12px 12px;
         -webkit-appearance: none;
@@ -427,7 +432,61 @@
       <p style="margin-bottom: 20px;">Ingresa tu correo electrónico para recibir tus resultados del test DISC:</p>
       <form id="emailForm">
         <div class="form-group">
-          <label for="userEmail">Correo electrónico:</label>
+          <label for="userNombre">Nombre: <span style="color: red;">*</span></label>
+          <input 
+            type="text" 
+            id="userNombre" 
+            name="userNombre" 
+            placeholder="Ingresa tu nombre" 
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="userApellido">Apellido: <span style="color: red;">*</span></label>
+          <input 
+            type="text" 
+            id="userApellido" 
+            name="userApellido" 
+            placeholder="Ingresa tu apellido" 
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="userRut">RUT: <span style="color: red;">*</span></label>
+          <input 
+            type="text" 
+            id="userRut" 
+            name="userRut" 
+            placeholder="12345678-9" 
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="userEscuela">Escuela: <span style="color: red;">*</span></label>
+          <select 
+            id="userEscuela" 
+            name="userEscuela" 
+            required
+          >
+            <option value="">Selecciona una escuela</option>
+            <option value="Administración y Negocios">Administración y Negocios</option>
+            <option value="Informática y Telecomunicaciones">Informática y Telecomunicaciones</option>
+            <option value="Diseño">Diseño</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="userCarrera">Carrera: <span style="color: red;">*</span></label>
+          <select 
+            id="userCarrera" 
+            name="userCarrera" 
+            required
+            disabled
+          >
+            <option value="">Primero selecciona una escuela</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="userEmail">Correo electrónico: <span style="color: red;">*</span></label>
           <input 
             type="email" 
             id="userEmail" 
@@ -877,21 +936,60 @@
     const EMAILJS_TEMPLATE_ID = 'template_toa9xet'; // Replace with your EmailJS template ID
     const EMAILJS_PUBLIC_KEY = 'ESxmjvGP_bv4tcBkc'; // Replace with your EmailJS public key
 
-    // Initialize EmailJS
-    (function() {
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-    })();
+    // Initialize EmailJS when script is loaded
+    function initEmailJS() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+        console.log('EmailJS inicializado correctamente');
+      } else {
+        console.warn('EmailJS aún no está cargado, reintentando...');
+        setTimeout(initEmailJS, 100);
+      }
+    }
+    
+    // Start EmailJS initialization
+    initEmailJS();
 
     // Store patron data globally for email sending (will be set by loadPatron)
     window.currentPatronData = null;
     window.currentSegments = null;
 
+    // Carreras por escuela
+    const carrerasPorEscuela = {
+      'Informática y Telecomunicaciones': [
+        'Ingeniería en Informática',
+        'Analista Programador',
+        'Ingeniería en Redes y Telecomunicaciones'
+      ],
+      'Administración y Negocios': [
+        'Ingeniería en Marketing Digital',
+        'Auditoría',
+        'Ingeniería en Gestión Logística',
+        'Ingeniería en Administración Mención Gestión de Personas',
+        'Ingeniería en Administración Mención Finanzas',
+        'Técnico en Administración',
+        'Técnico en Gestión Logística'
+      ],
+      'Diseño': [
+        'Diseño Industrial e Innovación en Productos',
+        'Diseño Gráfico',
+        'Diseño de Ambientes'
+      ]
+    };
+
     // Function to format patron data for email
-    function formatPatronForEmail(patron, segments) {
+    function formatPatronForEmail(nombre, apellido, rut, escuela, carrera, patron, segments) {
       if (!patron) return '';
       
       let emailContent = `
 RESULTADOS DEL TEST DISC
+
+Datos del estudiante:
+Nombre: ${nombre || 'N/A'}
+Apellido: ${apellido || 'N/A'}
+RUT: ${rut || 'N/A'}
+Escuela: ${escuela || 'N/A'}
+Carrera: ${carrera || 'N/A'}
 
 Patrón: ${patron.nombre || 'N/A'}
 
@@ -924,15 +1022,20 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
     }
 
     // Function to send email via EmailJS
-    async function sendEmail(email, patron, segments) {
+    async function sendEmail(email, nombre, apellido, rut, escuela, carrera, patron, segments) {
       try {
         const templateParams = {
           email: email,
+          nombre: nombre || 'N/A',
+          apellido: apellido || 'N/A',
+          rut: rut || 'N/A',
+          escuela: escuela || 'N/A',
+          carrera: carrera || 'N/A',
           patron_name: patron.nombre || 'N/A',
           patron_description: patron.descripcion || 'N/A',
           nivel_onboarding: patron.nivel_onboarding || 'N/A',
           aprendizajes_esperados: patron.aprendizajes_esperados || 'N/A',
-          full_content: formatPatronForEmail(patron, segments),
+          full_content: formatPatronForEmail(nombre, apellido, rut, escuela, carrera, patron, segments),
           segments: segments ? `D: ${segments.D}, I: ${segments.I}, S: ${segments.S}, C: ${segments.C}` : 'N/A',
           code: segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : 'N/A'
         };
@@ -950,21 +1053,125 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
       }
     }
 
-    // Handle form submission
-    document.addEventListener('DOMContentLoaded', function() {
+    // Function to setup escuela/carrera filtering
+    function setupEscuelaCarreraFilter() {
+      const escuelaSelect = document.getElementById('userEscuela');
+      const carreraSelect = document.getElementById('userCarrera');
+
+      console.log('Buscando elementos del formulario...');
+      console.log('escuelaSelect:', escuelaSelect);
+      console.log('carreraSelect:', carreraSelect);
+
+      // Filter carreras based on selected escuela
+      if (escuelaSelect && carreraSelect) {
+        console.log('✓ Event listeners configurados para escuela/carrera');
+        
+        escuelaSelect.addEventListener('change', function() {
+          console.log('✓ Escuela cambiada:', this.value);
+          const selectedEscuela = this.value;
+          const carreraSelect = document.getElementById('userCarrera');
+          
+          // Clear carrera selection
+          carreraSelect.value = '';
+          
+          if (!selectedEscuela) {
+            // No escuela selected, disable carrera
+            carreraSelect.disabled = true;
+            carreraSelect.innerHTML = '<option value="">Primero selecciona una escuela</option>';
+            return;
+          }
+          
+          // Enable carrera and populate options
+          carreraSelect.disabled = false;
+          const carreras = carrerasPorEscuela[selectedEscuela] || [];
+          
+          console.log('Carreras encontradas para', selectedEscuela, ':', carreras);
+          
+          if (carreras.length === 0) {
+            console.warn('No se encontraron carreras para la escuela:', selectedEscuela);
+            carreraSelect.innerHTML = '<option value="">No hay carreras disponibles</option>';
+            return;
+          }
+          
+          // Build options
+          let optionsHTML = '<option value="">Selecciona una carrera</option>';
+          carreras.forEach(function(carrera) {
+            optionsHTML += `<option value="${carrera}">${carrera}</option>`;
+          });
+          
+          carreraSelect.innerHTML = optionsHTML;
+          console.log('✓ Carreras cargadas en el select:', carreras.length, 'opciones');
+        });
+      } else {
+        console.error('✗ No se encontraron los elementos escuelaSelect o carreraSelect');
+        console.log('escuelaSelect:', escuelaSelect);
+        console.log('carreraSelect:', carreraSelect);
+        console.log('Formulario completo:', document.getElementById('emailForm'));
+      }
+    }
+
+    // Handle form submission and escuela/carrera filtering
+    function initFormHandlers() {
       const emailForm = document.getElementById('emailForm');
       const sendBtn = document.getElementById('sendBtn');
       const messageDiv = document.getElementById('message');
+      
+      // Setup escuela/carrera filtering
+      setupEscuelaCarreraFilter();
 
       if (emailForm) {
         emailForm.addEventListener('submit', async function(e) {
           e.preventDefault();
           
+          // Get form values
+          const nombreInput = document.getElementById('userNombre');
+          const apellidoInput = document.getElementById('userApellido');
+          const rutInput = document.getElementById('userRut');
+          const escuelaInput = document.getElementById('userEscuela');
+          const carreraInput = document.getElementById('userCarrera');
           const emailInput = document.getElementById('userEmail');
+          
+          const nombre = nombreInput.value.trim();
+          const apellido = apellidoInput.value.trim();
+          const rut = rutInput.value.trim();
+          const escuela = escuelaInput.value.trim();
+          const carrera = carreraInput.value.trim();
           const email = emailInput.value.trim();
+
+          // Validate required fields
+          if (!nombre) {
+            showMessage('Por favor, ingresa tu nombre.', 'error');
+            nombreInput.focus();
+            return;
+          }
+
+          if (!apellido) {
+            showMessage('Por favor, ingresa tu apellido.', 'error');
+            apellidoInput.focus();
+            return;
+          }
+
+          if (!rut) {
+            showMessage('Por favor, ingresa tu RUT.', 'error');
+            rutInput.focus();
+            return;
+          }
+
+          if (!escuela) {
+            showMessage('Por favor, selecciona una escuela.', 'error');
+            escuelaInput.focus();
+            return;
+          }
+
+          if (!carrera) {
+            showMessage('Por favor, selecciona una carrera.', 'error');
+            carreraInput.focus();
+            return;
+          }
 
           if (!email) {
             showMessage('Por favor, ingresa un correo electrónico válido.', 'error');
+            emailInput.focus();
             return;
           }
 
@@ -972,6 +1179,7 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(email)) {
             showMessage('Por favor, ingresa un correo electrónico válido.', 'error');
+            emailInput.focus();
             return;
           }
 
@@ -987,7 +1195,7 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
           hideMessage();
 
           // Send email
-          const result = await sendEmail(email, window.currentPatronData, window.currentSegments);
+          const result = await sendEmail(email, nombre, apellido, rut, escuela, carrera, window.currentPatronData, window.currentSegments);
 
           // Re-enable button
           sendBtn.disabled = false;
@@ -995,14 +1203,42 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
 
           if (result.success) {
             showMessage('¡Éxito! Los resultados han sido enviados a tu correo electrónico.', 'success');
-            emailInput.value = ''; // Clear the input
+            // Clear all form inputs
+            nombreInput.value = '';
+            apellidoInput.value = '';
+            rutInput.value = '';
+            escuelaInput.value = '';
+            carreraInput.value = '';
+            carreraInput.disabled = true;
+            carreraInput.innerHTML = '<option value="">Primero selecciona una escuela</option>';
+            emailInput.value = '';
           } else {
             showMessage('Error al enviar el correo. Por favor, verifica tu conexión e intenta nuevamente.', 'error');
             console.error('EmailJS error:', result.error);
           }
         });
       }
-    });
+    }
+
+    // Initialize form handlers when DOM is ready
+    // Wait a bit to ensure loadPatron has finished modifying the DOM
+    function initFormHandlersDelayed() {
+      // Small delay to ensure DOM is fully ready
+      setTimeout(function() {
+        console.log('Inicializando handlers del formulario...');
+        initFormHandlers();
+      }, 100);
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        // Wait for loadPatron to potentially finish
+        setTimeout(initFormHandlersDelayed, 200);
+      });
+    } else {
+      // DOM is already loaded, but wait a bit for loadPatron
+      initFormHandlersDelayed();
+    }
 
     // Helper functions for messages
     function showMessage(text, type) {
