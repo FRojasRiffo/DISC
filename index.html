@@ -16,6 +16,39 @@
     <div class="header-tagline">Global skills for job positioning</div>
   </div>
 
+  <!-- Modal de Bienvenida -->
+  <div id="welcomeModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Bienvenida al Test DISC</h2>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Estimado/a estudiante,</strong></p>
+        
+        <p>Le damos la bienvenida a este test psico-laboral que permite identificar patrones de personalidad con el fin de trabajar en sus competencias, habilidades y actitudes globales que demanda el Mercado Laboral en el siglo XXI y que lo/la distinguirán al momento de aplicar a una potencial oferta profesional.</p>
+        
+        <p>Para ello, contará con <strong>40 minutos</strong> para realizar el test DISC Personality. Seleccione la cualidad que lo/la represente en <strong>mayor</strong> y <strong>menor</strong> grado en cada uno de los 28 grupos. Luego, seleccione la opción <strong>"Enviar respuestas"</strong> al término del formulario.</p>
+        
+        <p>Al finalizar su test DISC, ingrese sus datos en función de recibir sus resultados a su correo. Usted podrá descubrir la siguiente información:</p>
+        
+        <ul>
+          <li>Patrón de personalidad.</li>
+          <li>Descripción con rasgos e implicaciones.</li>
+          <li>Nivel(es) de Onboarding a cursar</li>
+          <li>Aprendizajes esperados por nivel.</li>
+        </ul>
+        
+        <p class="modal-question"><strong>¿Estás listo para dar el primer paso hacia el Mundo Laboral?</strong></p>
+        
+        <p class="modal-support">Estamos aquí para apoyarte en cada paso.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-button" id="startTestBtn">Comenzar Test</button>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <p class="subtitle">Por cada pregunta de la 1 a la 28, escoja una frase que <b>más lo describa a usted</b> y una que <b>menos lo describa a usted</b>.</p>
     
@@ -32,5 +65,40 @@
 
   <script src="questions.js"></script>
   <script src="disc.js"></script>
+  <script>
+    // Modal de Bienvenida
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('welcomeModal');
+      const closeModal = document.getElementById('closeModal');
+      const startTestBtn = document.getElementById('startTestBtn');
+      
+      // Mostrar modal al cargar la página
+      modal.style.display = 'flex';
+      
+      // Cerrar modal al hacer clic en X
+      closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+      
+      // Cerrar modal al hacer clic en "Comenzar Test"
+      startTestBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+      
+      // Cerrar modal al hacer clic fuera del contenido
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+      
+      // Cerrar modal con tecla ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
