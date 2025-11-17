@@ -12,6 +12,10 @@ body {
   color: #333;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
+  /* Performance optimizations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .logo-header {
@@ -84,6 +88,10 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
   box-sizing: border-box;
+  /* Performance optimizations */
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 h1 {
@@ -117,9 +125,12 @@ h1 {
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 12px rgba(127, 184, 163, 0.2);
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   position: relative;
   overflow: hidden;
+  /* Performance optimizations */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .question::before {
@@ -142,11 +153,14 @@ h1 {
   opacity: 0.6;
 }
 
-.question:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(127, 184, 163, 0.3);
-  border-color: #5fa890;
-  background: linear-gradient(135deg, #ffffff 0%, #f5fbf8 100%);
+/* Disable hover on touch devices for better performance */
+@media (hover: hover) and (pointer: fine) {
+  .question:hover {
+    transform: translateY(-5px) translateZ(0);
+    box-shadow: 0 8px 20px rgba(127, 184, 163, 0.3);
+    border-color: #5fa890;
+    background: linear-gradient(135deg, #ffffff 0%, #f5fbf8 100%);
+  }
 }
 
 .question h3 {
@@ -212,8 +226,11 @@ h1 {
   accent-color: #7fb8a3;
 }
 
-.question input[type="radio"]:hover {
-  transform: scale(1.2);
+/* Disable hover on touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .question input[type="radio"]:hover {
+    transform: scale(1.2) translateZ(0);
+  }
 }
 
 .button-container {
@@ -231,12 +248,15 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-transform: uppercase;
   letter-spacing: 1px;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  /* Performance optimizations */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 #randomizeBtn {
@@ -245,22 +265,25 @@ button {
   border: 2px solid #7fb8a3;
 }
 
-#randomizeBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(127, 184, 163, 0.4);
-  background: linear-gradient(135deg, #b8e6d3, #c8e6d7);
+/* Disable hover on touch devices */
+@media (hover: hover) and (pointer: fine) {
+  #randomizeBtn:hover {
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 6px 20px rgba(127, 184, 163, 0.4);
+    background: linear-gradient(135deg, #b8e6d3, #c8e6d7);
+  }
+
+  #submitBtn:hover {
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 6px 20px rgba(127, 184, 163, 0.4);
+    background: linear-gradient(135deg, #5fa890, #4a9880);
+  }
 }
 
 #submitBtn {
   background: linear-gradient(135deg, #7fb8a3, #5fa890);
   color: white;
   border: 2px solid #5fa890;
-}
-
-#submitBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(127, 184, 163, 0.4);
-  background: linear-gradient(135deg, #5fa890, #4a9880);
 }
 
 button:active {
@@ -349,6 +372,11 @@ button:active {
   .container {
     padding: 25px 20px;
     border-radius: 15px;
+    /* Disable expensive backdrop-filter on mobile */
+    backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.98);
+    /* Reduce box-shadow complexity */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
   
   .logo-circle {
@@ -381,6 +409,10 @@ button:active {
   
   .question {
     padding: 12px;
+    /* Reduce box-shadow on mobile */
+    box-shadow: 0 2px 8px rgba(127, 184, 163, 0.15);
+    /* Disable will-change on mobile to save memory */
+    will-change: auto;
   }
   
   .question h3 {
@@ -406,6 +438,9 @@ button:active {
     padding: 14px 25px;
     font-size: 1em;
     min-height: 48px; /* Touch-friendly */
+    /* Reduce box-shadow on mobile */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    will-change: auto;
   }
   
   .button-container {
@@ -435,6 +470,8 @@ button:active {
   
   .container {
     padding: 20px 15px;
+    /* Further reduce shadows on small screens */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
   }
   
   h1 {
@@ -455,6 +492,9 @@ button:active {
   .question {
     aspect-ratio: auto;
     padding: 12px;
+    /* Simplify gradients on mobile */
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(127, 184, 163, 0.12);
   }
   
   .question h3 {
@@ -534,6 +574,7 @@ button:active {
   .container {
     padding: 18px 12px;
     border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
   }
   
   .logo-circle {
@@ -571,6 +612,9 @@ button:active {
   .question {
     padding: 10px;
     border-radius: 10px;
+    /* Remove gradients on very small screens */
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(127, 184, 163, 0.1);
   }
   
   .question h3 {
@@ -606,6 +650,7 @@ button:active {
     font-size: 0.9em;
     min-height: 44px;
     letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
   
   .button-container {
@@ -720,10 +765,13 @@ button:active {
   -webkit-touch-callout: none;
 }
 
-.tooltip-icon:hover {
-  color: #5fa890;
-  background-color: rgba(127, 184, 163, 0.15);
-  transform: scale(1.15);
+/* Disable hover on touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .tooltip-icon:hover {
+    color: #5fa890;
+    background-color: rgba(127, 184, 163, 0.15);
+    transform: scale(1.15) translateZ(0);
+  }
 }
 
 .tooltip-icon:active {
@@ -777,6 +825,17 @@ button:active {
   -webkit-backdrop-filter: blur(4px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  /* Performance optimizations */
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+/* Disable backdrop-filter on mobile for better performance */
+@media (max-width: 768px) {
+  .tooltip-overlay {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .tooltip-content {
@@ -789,15 +848,18 @@ button:active {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   animation: tooltipSlideIn 0.3s ease;
   position: relative;
+  /* Performance optimizations */
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
 @keyframes tooltipSlideIn {
   from {
-    transform: translateY(-20px);
+    transform: translateY(-20px) translateZ(0);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
     opacity: 1;
   }
 }

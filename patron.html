@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>Resultado DISC - Patrón</title>
   <style>
     * {
@@ -21,6 +23,10 @@
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-text-size-adjust: 100%;
+      /* Performance optimizations */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
     .container {
       background: rgba(255, 255, 255, 0.95);
@@ -32,6 +38,9 @@
       margin: auto;
       backdrop-filter: blur(10px);
       box-sizing: border-box;
+      /* Performance optimizations */
+      contain: layout style paint;
+      transform: translateZ(0);
     }
     h1 {
       text-align: center;
@@ -94,7 +103,9 @@
       border-radius: 8px;
       font-size: 16px;
       font-family: "Segoe UI", sans-serif;
-      transition: border-color 0.3s;
+      transition: border-color 0.2s ease;
+      /* Performance optimizations */
+      transform: translateZ(0);
     }
     .form-group input:focus {
       outline: none;
@@ -109,12 +120,18 @@
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       width: 100%;
+      /* Performance optimizations */
+      transform: translateZ(0);
+      will-change: transform;
     }
-    .btn-send:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(95, 168, 144, 0.3);
+    /* Disable hover on touch devices */
+    @media (hover: hover) and (pointer: fine) {
+      .btn-send:hover {
+        transform: translateY(-2px) translateZ(0);
+        box-shadow: 0 5px 15px rgba(95, 168, 144, 0.3);
+      }
     }
     .btn-send:active {
       transform: translateY(0);
@@ -152,6 +169,12 @@
       .container {
         padding: 25px 20px;
         border-radius: 15px;
+        /* Disable expensive backdrop-filter on mobile */
+        backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.98);
+        /* Reduce box-shadow complexity */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        will-change: auto;
       }
       
       h1 {
@@ -201,6 +224,8 @@
         min-height: 48px; /* Touch-friendly button size */
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        will-change: auto;
       }
       
       .meta {
@@ -217,6 +242,7 @@
       .container {
         padding: 20px 15px;
         border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
       }
       
       h1 {
@@ -286,6 +312,8 @@
         letter-spacing: 0.5px;
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        will-change: auto;
       }
       
       .message {
@@ -327,8 +355,8 @@
     }
   </style>
   <link rel="stylesheet" href="results.css" />
-  <!-- EmailJS SDK -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- EmailJS SDK - Load asynchronously for better performance -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" async defer></script>
 </head>
 <body>
   <!-- Encabezado con el logo SVG del index.html -->
