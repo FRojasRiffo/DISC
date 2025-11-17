@@ -64,8 +64,84 @@
       color: #5fa890;
       font-family: 'Courier New', monospace;
     }
+    .email-form {
+      margin-top: 40px;
+      padding: 30px;
+      background: linear-gradient(135deg, #f0f9f5, #ffffff);
+      border-radius: 15px;
+      border-left: 4px solid #7fb8a3;
+    }
+    .email-form h2 {
+      margin-top: 0;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #2c2c2c;
+      font-weight: 500;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #d4e8e0;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: "Segoe UI", sans-serif;
+      transition: border-color 0.3s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #5fa890;
+    }
+    .btn-send {
+      background: linear-gradient(135deg, #5fa890, #7fb8a3);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .btn-send:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(95, 168, 144, 0.3);
+    }
+    .btn-send:active {
+      transform: translateY(0);
+    }
+    .btn-send:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
   </style>
   <link rel="stylesheet" href="results.css" />
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
   <!-- Encabezado con el logo SVG del index.html -->
@@ -121,33 +197,6 @@
   <div class="container">
     <h1 id="nombre">Patrón del Alentador</h1>
 
-    <h2>Emociones:</h2>
-    <p id="emociones"></p>
-
-    <h2>Meta:</h2>
-    <p id="meta"></p>
-
-    <h2>Juzga a los demás por:</h2>
-    <p id="juzga_a_los_demas_por"></p>
-
-    <h2>Influye en los demás mediante:</h2>
-    <p id="influye_en_los_demas_mediante"></p>
-
-    <h2>Su valor para la organización:</h2>
-    <p id="valor_para_la_organizacion"></p>
-
-    <h2>Abusa de:</h2>
-    <p id="abusa_de"></p>
-
-    <h2>Bajo presión:</h2>
-    <p id="bajo_presion"></p>
-
-    <h2>Teme:</h2>
-    <p id="teme"></p>
-
-    <h2>Sería más eficaz si:</h2>
-    <p id="seria_mas_eficaz_si"></p>
-
     <h2>Descripción:</h2>
     <p id="descripcion"></p>
 
@@ -156,6 +205,28 @@
 
     <h2>Aprendizajes esperados:</h2>
     <p id="aprendizajes_esperados" style="white-space: pre-line;"></p>
+
+    <!-- Email Form -->
+    <div class="email-form">
+      <h2>Recibir resultados por correo</h2>
+      <p style="margin-bottom: 20px;">Ingresa tu correo electrónico para recibir tus resultados del test DISC:</p>
+      <form id="emailForm">
+        <div class="form-group">
+          <label for="userEmail">Correo electrónico:</label>
+          <input 
+            type="email" 
+            id="userEmail" 
+            name="userEmail" 
+            placeholder="tu@email.com" 
+            required
+          />
+        </div>
+        <button type="submit" class="btn-send" id="sendBtn">
+          Enviar resultados por correo
+        </button>
+        <div id="message" class="message"></div>
+      </form>
+    </div>
   </div>
 
   <script src="patrones.js"></script>
@@ -406,6 +477,8 @@
           try {
             segments = JSON.parse(decodeURIComponent(segmentsParam));
             console.log("✓ Segmentos obtenidos de la URL:", segments);
+            // Store segments globally for email functionality
+            window.currentSegments = segments;
             // Guardar en localStorage y sessionStorage para futuras referencias
             try {
               localStorage.setItem("discSegments", JSON.stringify(segments));
@@ -425,6 +498,8 @@
             try {
               segments = JSON.parse(segmentsStr);
               console.log("✓ Segmentos encontrados en sessionStorage:", segments);
+              // Store segments globally for email functionality
+              window.currentSegments = segments;
             } catch (e) {
               console.error("Error parseando segmentos de sessionStorage:", e);
             }
@@ -438,6 +513,8 @@
             try {
               segments = JSON.parse(segmentsStr);
               console.log("✓ Segmentos encontrados en localStorage:", segments);
+              // Store segments globally for email functionality
+              window.currentSegments = segments;
             } catch (e) {
               console.error("Error parseando segmentos de localStorage:", e);
             }
@@ -469,6 +546,8 @@
           segments = calculateSegmentsFromResults();
           if (segments) {
             console.log("✓ Segmentos calculados exitosamente:", segments);
+            // Store segments globally for email functionality
+            window.currentSegments = segments;
             // Guardar los segmentos calculados para futuras referencias
             try {
               localStorage.setItem("discSegments", JSON.stringify(segments));
@@ -499,8 +578,16 @@
         console.log("Buscando patrón con código:", code);
         console.log("Segmentos:", segments);
 
+        // Store segments globally for email functionality
+        window.currentSegments = segments;
+
         // Buscar el patrón
         const patron = findPatronByCode(code);
+        
+        // Store patron data globally for email functionality
+        if (patron) {
+          window.currentPatronData = patron;
+        }
         
         if (!patron) {
           // Si no se encuentra, mostrar un mensaje de error más amigable
@@ -567,6 +654,157 @@
     } else {
       loadPatron();
     }
+
+    // EmailJS Configuration
+    // TODO: Replace these with your actual EmailJS credentials
+    // Get them from https://www.emailjs.com/
+    const EMAILJS_SERVICE_ID = 'service_25dq11k'; // Replace with your EmailJS service ID
+    const EMAILJS_TEMPLATE_ID = 'template_toa9xet'; // Replace with your EmailJS template ID
+    const EMAILJS_PUBLIC_KEY = 'ESxmjvGP_bv4tcBkc'; // Replace with your EmailJS public key
+
+    // Initialize EmailJS
+    (function() {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    })();
+
+    // Store patron data globally for email sending (will be set by loadPatron)
+    window.currentPatronData = null;
+    window.currentSegments = null;
+
+    // Function to format patron data for email
+    function formatPatronForEmail(patron, segments) {
+      if (!patron) return '';
+      
+      let emailContent = `
+RESULTADOS DEL TEST DISC
+
+Patrón: ${patron.nombre || 'N/A'}
+
+Descripción:
+${patron.descripcion || 'N/A'}
+
+Nivel de Onboarding:
+${patron.nivel_onboarding || 'N/A'}
+
+Aprendizajes esperados:
+${patron.aprendizajes_esperados || 'N/A'}
+
+---
+Segmentos DISC: D=${segments?.D || 'N/A'}, I=${segments?.I || 'N/A'}, S=${segments?.S || 'N/A'}, C=${segments?.C || 'N/A'}
+Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : 'N/A'}
+      `;
+
+      // Add additional fields if they exist
+      if (patron.emociones) {
+        emailContent += `\n\nEmociones:\n${patron.emociones}`;
+      }
+      if (patron.meta) {
+        emailContent += `\n\nMeta:\n${patron.meta}`;
+      }
+      if (patron.valor_para_la_organizacion) {
+        emailContent += `\n\nValor para la organización:\n${patron.valor_para_la_organizacion}`;
+      }
+
+      return emailContent.trim();
+    }
+
+    // Function to send email via EmailJS
+    async function sendEmail(email, patron, segments) {
+      try {
+        const templateParams = {
+          to_email: email,
+          patron_name: patron.nombre || 'N/A',
+          patron_description: patron.descripcion || 'N/A',
+          nivel_onboarding: patron.nivel_onboarding || 'N/A',
+          aprendizajes_esperados: patron.aprendizajes_esperados || 'N/A',
+          full_content: formatPatronForEmail(patron, segments),
+          segments: segments ? `D: ${segments.D}, I: ${segments.I}, S: ${segments.S}, C: ${segments.C}` : 'N/A',
+          code: segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : 'N/A'
+        };
+
+        const response = await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          templateParams
+        );
+
+        return { success: true, response };
+      } catch (error) {
+        console.error('Error sending email:', error);
+        return { success: false, error };
+      }
+    }
+
+    // Handle form submission
+    document.addEventListener('DOMContentLoaded', function() {
+      const emailForm = document.getElementById('emailForm');
+      const sendBtn = document.getElementById('sendBtn');
+      const messageDiv = document.getElementById('message');
+
+      if (emailForm) {
+        emailForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const emailInput = document.getElementById('userEmail');
+          const email = emailInput.value.trim();
+
+          if (!email) {
+            showMessage('Por favor, ingresa un correo electrónico válido.', 'error');
+            return;
+          }
+
+          // Validate email format
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            showMessage('Por favor, ingresa un correo electrónico válido.', 'error');
+            return;
+          }
+
+          // Check if patron data is available
+          if (!window.currentPatronData) {
+            showMessage('Error: No se encontraron los datos del patrón. Por favor, recarga la página.', 'error');
+            return;
+          }
+
+          // Disable button and show loading state
+          sendBtn.disabled = true;
+          sendBtn.textContent = 'Enviando...';
+          hideMessage();
+
+          // Send email
+          const result = await sendEmail(email, window.currentPatronData, window.currentSegments);
+
+          // Re-enable button
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Enviar resultados por correo';
+
+          if (result.success) {
+            showMessage('¡Éxito! Los resultados han sido enviados a tu correo electrónico.', 'success');
+            emailInput.value = ''; // Clear the input
+          } else {
+            showMessage('Error al enviar el correo. Por favor, verifica tu conexión e intenta nuevamente.', 'error');
+            console.error('EmailJS error:', result.error);
+          }
+        });
+      }
+    });
+
+    // Helper functions for messages
+    function showMessage(text, type) {
+      const messageDiv = document.getElementById('message');
+      if (messageDiv) {
+        messageDiv.textContent = text;
+        messageDiv.className = `message ${type}`;
+      }
+    }
+
+    function hideMessage() {
+      const messageDiv = document.getElementById('message');
+      if (messageDiv) {
+        messageDiv.className = 'message';
+      }
+    }
+
   </script>
 </body>
 </html>
