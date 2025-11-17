@@ -712,7 +712,7 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
     async function sendEmail(email, patron, segments) {
       try {
         const templateParams = {
-          to_email: email,
+          email: email,
           patron_name: patron.nombre || 'N/A',
           patron_description: patron.descripcion || 'N/A',
           nivel_onboarding: patron.nivel_onboarding || 'N/A',
