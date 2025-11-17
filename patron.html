@@ -61,6 +61,24 @@
       margin-bottom: 15px;
       color: #444;
     }
+    /* Estilos para descripciones formateadas */
+    #descripcion,
+    #nivel_onboarding,
+    #aprendizajes_esperados {
+      font-family: "Segoe UI", sans-serif;
+      text-align: justify;
+      line-height: 1.5;
+      color: #444;
+    }
+    #descripcion {
+      margin-bottom: 20px;
+    }
+    #nivel_onboarding {
+      margin-bottom: 20px;
+    }
+    #aprendizajes_esperados {
+      margin-bottom: 20px;
+    }
     .meta {
       margin-top: 30px;
       margin-bottom: 20px;
@@ -437,9 +455,10 @@
             type="text" 
             id="userNombre" 
             name="userNombre" 
-            placeholder="Ingresa tu nombre" 
+            placeholder="Ingresa todos tus nombres" 
             required
           />
+          <small style="display: block; margin-top: 5px; color: #666; font-size: 0.9em;">Ingrese todos sus nombres</small>
         </div>
         <div class="form-group">
           <label for="userApellido">Apellido: <span style="color: red;">*</span></label>
@@ -447,9 +466,10 @@
             type="text" 
             id="userApellido" 
             name="userApellido" 
-            placeholder="Ingresa tu apellido" 
+            placeholder="Ingresa ambos apellidos" 
             required
           />
+          <small style="display: block; margin-top: 5px; color: #666; font-size: 0.9em;">Ingrese ambos apellidos</small>
         </div>
         <div class="form-group">
           <label for="userRut">RUT: <span style="color: red;">*</span></label>
@@ -902,10 +922,64 @@
           aprendizajes_esperados: "aprendizajes_esperados"
         };
 
+        // Función para formatear niveles de onboarding
+        function formatNivelOnboarding(text) {
+          if (!text) return '';
+          // Separar por saltos de línea y formatear cada nivel
+          const niveles = text.split('\n').map(n => n.trim()).filter(n => n);
+          return niveles.map(nivel => {
+            // Buscar patrones como "Nivel X: Nombre" o "Nivel X: Nombre."
+            const match = nivel.match(/^(Nivel\s+\d+):\s*(.+?)(\.)?$/);
+            if (match) {
+              const nombreNivel = match[2].replace(/\.$/, ''); // Remover punto final si existe
+              return `<strong>${match[1]}:</strong> ${nombreNivel}`;
+            }
+            return nivel;
+          }).join('<br><br>');
+        }
+
+        // Función para formatear aprendizajes esperados
+        function formatAprendizajesEsperados(text) {
+          if (!text) return '';
+          // Separar por saltos de línea
+          const partes = text.split('\n').filter(p => p.trim());
+          return partes.map((parte, index) => {
+            // Buscar subtítulos como "Explorador:", "Líder:", "Pasante:"
+            const match = parte.match(/^([A-Za-záéíóúÁÉÍÓÚñÑ\s]+):\s*(.+)$/);
+            if (match) {
+              const titulo = match[1].trim();
+              // Verificar si es un subtítulo conocido
+              if (titulo === 'Explorador' || titulo === 'Líder' || titulo === 'Pasante') {
+                return `<strong>${titulo}:</strong> ${match[2]}`;
+              }
+            }
+            return parte;
+          }).join('<br><br>');
+        }
+
+        // Función para formatear descripción (agregar negritas donde sea necesario)
+        function formatDescripcion(text) {
+          if (!text) return '';
+          // Agregar negritas a términos clave (puedes ajustar estos patrones)
+          let formatted = text;
+          // Negritas para nombres de patrones y términos importantes
+          formatted = formatted.replace(/\b(Alentador|Realizador|Perfeccionista|Creativo|Objetivo|Persuasivo|Especialista|Paciente|Inspirador|Ejecutor|Analista|Pionero|Arquitecto|Diplomático|Estratega)\b/g, '<strong>$1</strong>');
+          return formatted;
+        }
+
+        // Aplicar formateo a los campos específicos
         for (const [key, elementId] of Object.entries(fieldMapping)) {
           const el = document.getElementById(elementId);
           if (el && patron[key] !== undefined) {
-            el.textContent = patron[key];
+            if (key === 'nivel_onboarding') {
+              el.innerHTML = formatNivelOnboarding(patron[key]);
+            } else if (key === 'aprendizajes_esperados') {
+              el.innerHTML = formatAprendizajesEsperados(patron[key]);
+            } else if (key === 'descripcion') {
+              el.innerHTML = formatDescripcion(patron[key]);
+            } else {
+              el.textContent = patron[key];
+            }
           }
         }
 
@@ -1140,13 +1214,13 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
 
           // Validate required fields
           if (!nombre) {
-            showMessage('Por favor, ingresa tu nombre.', 'error');
+            showMessage('Por favor, ingresa tu nombre completo.', 'error');
             nombreInput.focus();
             return;
           }
 
           if (!apellido) {
-            showMessage('Por favor, ingresa tu apellido.', 'error');
+            showMessage('Por favor, ingresa tus apellidos.', 'error');
             apellidoInput.focus();
             return;
           }
