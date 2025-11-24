@@ -358,6 +358,227 @@
       }
     }
 
+    /* Job offers section */
+    .job-offers-wrapper {
+      margin-top: 30px;
+      padding: 24px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f7fffb 0%, #eef8f2 100%);
+      border: 1px solid rgba(127, 184, 163, 0.4);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .job-offers-intro {
+      font-weight: 600;
+      color: #2c2c2c;
+      margin-bottom: 14px;
+    }
+
+    .job-offers-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .job-offers-btn {
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: 2px solid #ff8c66;
+      background: linear-gradient(135deg, #ffa07a, #ff8c66);
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 16px rgba(255, 140, 102, 0.35);
+    }
+
+    .job-offers-btn:hover:enabled {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(255, 140, 102, 0.45);
+    }
+
+    .job-offers-btn:disabled {
+      background: #dcdcdc;
+      border-color: #c0c0c0;
+      color: #7a7a7a;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .career-legend {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #fff8e1;
+      color: #7a5e00;
+      font-weight: 600;
+      text-align: center;
+      border: 1px solid rgba(255, 174, 66, 0.4);
+    }
+
+    /* Job offers modal */
+    .job-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 12000;
+    }
+
+    .job-modal .modal-content {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f9f5 100%);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      animation: slideDown 0.3s ease;
+    }
+
+    .job-modal .modal-header {
+      background: linear-gradient(135deg, #5fa890, #7fb8a3);
+      color: white;
+      padding: 22px 28px;
+      border-radius: 18px 18px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .job-modal .modal-header h2 {
+      margin: 0;
+      border: none;
+      padding: 0;
+      color: white;
+    }
+
+    .job-modal .modal-close {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 30px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .job-modal .modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .job-modal-body {
+      padding: 28px 32px 36px;
+    }
+
+    .job-offers-empty {
+      text-align: center;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .job-offers-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .job-offer-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid rgba(127, 184, 163, 0.35);
+      padding: 20px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .job-offer-header h3 {
+      margin-bottom: 4px;
+      font-size: 1.1em;
+      color: #2c2c2c;
+    }
+
+    .job-offer-company {
+      font-size: 0.9em;
+      color: #5fa890;
+      font-weight: 600;
+    }
+
+    .job-offer-summary {
+      color: #444;
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+
+    .job-offer-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .job-offer-tag {
+      background: #f0f9f5;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.85em;
+      font-weight: 600;
+      color: #3d7b66;
+    }
+
+    .job-offer-link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 10px;
+      background: #5fa890;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 6px 18px rgba(95, 168, 144, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .job-offer-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(95, 168, 144, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .job-offers-wrapper {
+        padding: 18px;
+      }
+
+      .job-offers-btn {
+        width: 100%;
+      }
+
+      .job-offers-list {
+        grid-template-columns: 1fr;
+      }
+
+      .job-modal .modal-content {
+        max-width: 95%;
+      }
+    }
+
     /* Prevent text overflow on very small screens */
     @media (max-width: 360px) {
       h1 {
@@ -375,6 +596,8 @@
       .container {
         padding: 15px 12px;
       }
+
+      
     }
   </style>
   <link rel="stylesheet" href="results.css" />
@@ -521,9 +744,30 @@
         <div id="message" class="message"></div>
       </form>
     </div>
+    <div class="job-offers-wrapper">
+      <p class="job-offers-intro">A continuación, encontrarás ofertas laborales de potenciales prácticas profesionales acorde a tu carrera:</p>
+      <div class="job-offers-actions">
+        <button type="button" id="jobOffersBtn" class="job-offers-btn" disabled>Ofertas laborales</button>
+      </div>
+      <p class="career-legend">La relevancia de finalizar tu carrera en el tiempo que corresponde aumenta la probabilidad de lograr un trabajo pertinente.</p>
+    </div>
+  </div>
+
+  <div id="jobOffersModal" class="job-modal" role="dialog" aria-modal="true" aria-labelledby="jobOffersTitle" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="jobOffersTitle">Ofertas laborales</h2>
+        <button class="modal-close" id="closeJobModal" aria-label="Cerrar ofertas">&times;</button>
+      </div>
+      <div class="job-modal-body">
+        <p id="jobOffersEmpty" class="job-offers-empty">Selecciona una carrera para visualizar oportunidades relacionadas.</p>
+        <div id="jobOffersList" class="job-offers-list" aria-live="polite"></div>
+      </div>
+    </div>
   </div>
 
   <script src="patrones.js"></script>
+  <script src="job-offers.js"></script>
   <script>
     // Función para calcular segmentos desde los resultados (fallback)
     function calculateSegmentsFromResults() {
@@ -1152,6 +1396,7 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
             // No escuela selected, disable carrera
             carreraSelect.disabled = true;
             carreraSelect.innerHTML = '<option value="">Primero selecciona una escuela</option>';
+            carreraSelect.dispatchEvent(new Event('change'));
             return;
           }
           
@@ -1175,6 +1420,7 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
           
           carreraSelect.innerHTML = optionsHTML;
           console.log('✓ Carreras cargadas en el select:', carreras.length, 'opciones');
+          carreraSelect.dispatchEvent(new Event('change'));
         });
       } else {
         console.error('✗ No se encontraron los elementos escuelaSelect o carreraSelect');
@@ -1286,6 +1532,7 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
             carreraInput.disabled = true;
             carreraInput.innerHTML = '<option value="">Primero selecciona una escuela</option>';
             emailInput.value = '';
+            carreraInput.dispatchEvent(new Event('change'));
           } else {
             showMessage('Error al enviar el correo. Por favor, verifica tu conexión e intenta nuevamente.', 'error');
             console.error('EmailJS error:', result.error);
