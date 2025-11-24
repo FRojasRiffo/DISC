@@ -1350,9 +1350,7 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
           escuela: escuela || 'N/A',
           carrera: carrera || 'N/A',
           patron_name: patron.nombre || 'N/A',
-          patron_description: patron.descripcion || 'N/A',
           nivel_onboarding: patron.nivel_onboarding || 'N/A',
-          aprendizajes_esperados: patron.aprendizajes_esperados || 'N/A',
           full_content: formatPatronForEmail(nombre, apellido, rut, escuela, carrera, patron, segments),
           segments: segments ? `D: ${segments.D}, I: ${segments.I}, S: ${segments.S}, C: ${segments.C}` : 'N/A',
           code: segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : 'N/A'
@@ -1363,6 +1361,16 @@ Código: ${segments ? `${segments.D}${segments.I}${segments.S}${segments.C}` : '
           EMAILJS_TEMPLATE_ID,
           templateParams
         );
+
+        // ALSO send the data to Google Sheets
+          fetch("https://script.google.com/macros/s/AKfycbyCfYZeDsqhifF3e8uwqZ9bXkB4lBz1EG3K3Mh3e_NiD73N_D0o1_G71TzA_LRgatjigg/exec", {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(templateParams)
+          });
 
         return { success: true, response };
       } catch (error) {
