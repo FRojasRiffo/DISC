@@ -4,6 +4,77 @@
  */
 const careerOffersData = [
   {
+    id: "diseño-industrial",
+    label: "Diseño Industrial e Innovación en Productos",
+    matchValues: ["diseño industrial", "diseño industrial e innovación en productos"],
+    offers: [
+      {
+        title: "Práctica Diseño 2025 / Teatro Municipal",
+        status: "Activa",
+        company: "Teatro Municipal de Santiago",
+        contactName: "Francisca Vásquez Calvo",
+        contactEmail: "fvasquez@municipal.cl",
+        area: "Creatividad y Diseño",
+        role: "Practicante",
+        degree: "Diseño Industrial",
+        modality: "Presencial",
+        location: "Santiago",
+        faculty: "Diseño",
+        salary: "$ 100.000",
+        schedule: "Jornada Completa",
+        applyUrl: "https://duoclaboral.cl/jobs/800300"
+      },
+      {
+        title: "Práctica Profesional - Gerencia Comercial Visual Merchandising",
+        status: "Activa",
+        company: "Ripley Chile",
+        contactName: "Diana Muñoz",
+        contactEmail: "dmunozt@ripley.com",
+        area: "Creatividad y Diseño",
+        role: "Practicante",
+        degree: "Diseño Industrial",
+        modality: "Híbrido",
+        location: "Las Condes",
+        faculty: "Diseño",
+        salary: "$ 250.000",
+        schedule: "Jornada Completa",
+        applyUrl: "https://duoclaboral.cl/jobs/792563"
+      },
+      {
+        title: "Práctica área Desarrollo de Productos Alimenticios",
+        status: "Activa",
+        company: "ARCOR",
+        contactName: "Mohit Keswani",
+        contactEmail: "mkeswani@arcor.com",
+        area: "Creatividad y Diseño",
+        role: "Practicante",
+        degree: "Diseño Industrial",
+        modality: "Presencial",
+        location: "Cerrillos",
+        faculty: "Diseño",
+        salary: "$ 200.000",
+        schedule: "Jornada No definida",
+        applyUrl: "https://duoclaboral.cl/jobs/777666"
+      },
+      {
+        title: "Dibujante Proyectista eléctrico",
+        status: "Activa",
+        company: "Teknica",
+        contactName: "Mario Peña Noguera",
+        contactEmail: "mario.pena@teknica.cl",
+        area: "Ingeniería y Construcción",
+        role: "Practicante",
+        degree: "Diseño industrial",
+        modality: "Presencial",
+        location: "San Bernardo",
+        faculty: "Diseño",
+        salary: "$ 350.000",
+        schedule: "Jornada Completa",
+        applyUrl: "https://duoclaboral.cl/jobs/779436"
+      }
+    ]
+  },
+  {
     id: "ing-informatica",
     label: "Ingeniería en Informática",
     matchValues: ["ing-informatica", "ingeniería en informática"],
@@ -150,15 +221,50 @@ document.addEventListener("DOMContentLoaded", () => {
     careerData.offers.forEach((offer) => {
       const card = document.createElement("article");
       card.className = "job-offer-card";
+      
+      // Build status badge if available
+      const statusBadge = offer.status ? `<span class="job-offer-status job-offer-status-${offer.status.toLowerCase().replace(/\s+/g, '-')}">${offer.status}</span>` : '';
+      
+      // Build summary/description (use summary if available, otherwise build from other fields)
+      let description = '';
+      if (offer.summary) {
+        description = `<p class="job-offer-summary">${offer.summary}</p>`;
+      } else if (offer.area || offer.role) {
+        const parts = [];
+        if (offer.area) parts.push(`<strong>Área:</strong> ${offer.area}`);
+        if (offer.role) parts.push(`<strong>Rol:</strong> ${offer.role}`);
+        if (parts.length > 0) {
+          description = `<p class="job-offer-summary">${parts.join(' · ')}</p>`;
+        }
+      }
+      
+      // Build contact info if available
+      const contactInfo = (offer.contactName || offer.contactEmail) ? `
+        <div class="job-offer-contact">
+          ${offer.contactName ? `<span class="job-offer-contact-name">${offer.contactName}</span>` : ''}
+          ${offer.contactEmail ? `<a href="mailto:${offer.contactEmail}" class="job-offer-contact-email">${offer.contactEmail}</a>` : ''}
+        </div>
+      ` : '';
+      
+      // Build meta tags
+      const metaTags = [];
+      if (offer.modality) metaTags.push(`<span class="job-offer-tag">${offer.modality}</span>`);
+      if (offer.location) metaTags.push(`<span class="job-offer-tag">${offer.location}</span>`);
+      if (offer.salary) metaTags.push(`<span class="job-offer-tag job-offer-tag-salary">${offer.salary}</span>`);
+      if (offer.schedule) metaTags.push(`<span class="job-offer-tag">${offer.schedule}</span>`);
+      
       card.innerHTML = `
         <div class="job-offer-header">
-          <h3>${offer.title}</h3>
+          <div class="job-offer-header-top">
+            <h3>${offer.title}</h3>
+            ${statusBadge}
+          </div>
           <span class="job-offer-company">${offer.company}</span>
         </div>
-        <p class="job-offer-summary">${offer.summary}</p>
+        ${description}
+        ${contactInfo}
         <div class="job-offer-meta">
-          <span class="job-offer-tag">${offer.modality}</span>
-          <span class="job-offer-tag">${offer.location}</span>
+          ${metaTags.join('')}
         </div>
         <a href="${offer.applyUrl}" target="_blank" rel="noopener noreferrer" class="job-offer-link">
           Postular
