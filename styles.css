@@ -5,7 +5,9 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12px;
+  line-height: 1.5;
   background: linear-gradient(90deg, #a8e6cf 0%, #b8e6d3 25%, #c8e6d7 50%, #d4e8e0 75%, #e0eae9 100%);
   min-height: 100vh;
   padding: 30px 20px;
@@ -97,16 +99,18 @@ body {
 h1 {
   text-align: center;
   color: #2c2c2c;
-  font-size: 2.2em;
+  font-size: 14px;
   margin-bottom: 10px;
   font-weight: 600;
+  line-height: 1.5;
 }
 
 .subtitle {
-  text-align: center;
+  text-align: justify;
   color: #555;
   margin-bottom: 30px;
-  font-size: 1.1em;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 #discForm {
@@ -164,29 +168,31 @@ h1 {
 }
 
 .question h3 {
-  color: #2c2c2c;
-  font-size: 1.1em;
+  color: #5fa890;
+  font-size: 14px;
   margin-bottom: 12px;
   text-align: center;
   font-weight: 700;
-  color: #5fa890;
+  line-height: 1.5;
 }
 
 .question table {
   width: 100%;
   border-collapse: collapse;
   flex: 1;
-  font-size: 0.85em;
+  font-size: 12px;
+  text-align: justify;
 }
 
 .question th {
   background: linear-gradient(135deg, #7fb8a3, #5fa890);
   color: white;
   padding: 8px 4px;
-  font-size: 0.75em;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  line-height: 1.5;
 }
 
 .question th:first-child {
@@ -201,7 +207,8 @@ h1 {
   padding: 8px 4px;
   text-align: center;
   border-bottom: 1px solid #e0e8f5;
-  font-size: 0.8em;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .question tr:last-child td {
@@ -213,10 +220,11 @@ h1 {
 }
 
 .question td:first-child {
-  text-align: left;
+  text-align: justify;
   padding-left: 8px;
   font-weight: 500;
   color: #333;
+  line-height: 1.5;
 }
 
 .question input[type="radio"] {
@@ -304,10 +312,11 @@ button:active {
 .score-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1em;
+  font-size: 12px;
   background: white;
   border-radius: 8px;
   overflow: hidden;
+  line-height: 1.5;
 }
 
 .score-table thead {
@@ -321,7 +330,8 @@ button:active {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 0.9em;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .score-table tbody tr {
@@ -335,6 +345,8 @@ button:active {
 .score-table td {
   padding: 10px 12px;
   text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .score-label {
@@ -342,26 +354,32 @@ button:active {
   color: #2c2c2c;
   text-align: left !important;
   background: #f9f9f9;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .score-value {
   font-weight: 700;
-  font-size: 1.2em;
+  font-size: 14px;
   color: #5fa890;
   background: #f0f9f5;
+  line-height: 1.5;
 }
 
 .score-base {
   font-weight: 500;
   color: #666;
   background: #fafafa;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .score-intensity {
   font-weight: 600;
   color: #7fb8a3;
   background: #f0f9f5;
-  font-size: 1.1em;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 @media (max-width: 768px) {
@@ -394,11 +412,11 @@ button:active {
   }
   
   h1 {
-    font-size: 1.8em;
+    font-size: 14px;
   }
   
   .subtitle {
-    font-size: 1em;
+    font-size: 14px;
     margin-bottom: 25px;
   }
   
@@ -416,22 +434,22 @@ button:active {
   }
   
   .question h3 {
-    font-size: 1em;
+    font-size: 14px;
     margin-bottom: 10px;
   }
   
   .question table {
-    font-size: 0.8em;
+    font-size: 12px;
   }
   
   .question th {
     padding: 6px 3px;
-    font-size: 0.7em;
+    font-size: 12px;
   }
   
   .question td {
     padding: 6px 3px;
-    font-size: 0.75em;
+    font-size: 12px;
   }
   
   button {
@@ -454,7 +472,7 @@ button:active {
   }
   
   .score-table {
-    font-size: 0.9em;
+    font-size: 12px;
   }
   
   .score-table th,
@@ -475,11 +493,11 @@ button:active {
   }
   
   h1 {
-    font-size: 1.6em;
+    font-size: 14px;
   }
   
   .subtitle {
-    font-size: 0.95em;
+    font-size: 14px;
     margin-bottom: 20px;
     padding: 0 5px;
   }
@@ -498,21 +516,21 @@ button:active {
   }
   
   .question h3 {
-    font-size: 0.95em;
+    font-size: 14px;
   }
   
   .question table {
-    font-size: 0.75em;
+    font-size: 12px;
   }
   
   .question th {
     padding: 6px 3px;
-    font-size: 0.65em;
+    font-size: 12px;
   }
   
   .question td {
     padding: 5px 3px;
-    font-size: 0.7em;
+    font-size: 12px;
   }
   
   .question input[type="radio"] {
@@ -548,17 +566,17 @@ button:active {
   }
   
   .score-table {
-    font-size: 0.8em;
+    font-size: 12px;
   }
   
   .score-table th,
   .score-table td {
     padding: 8px 5px;
-    font-size: 0.85em;
+    font-size: 12px;
   }
   
   .score-value {
-    font-size: 1.05em;
+    font-size: 14px;
   }
   
   .score-counter-container {
@@ -594,14 +612,14 @@ button:active {
   }
   
   h1 {
-    font-size: 1.4em;
+    font-size: 14px;
     margin-bottom: 8px;
   }
   
   .subtitle {
-    font-size: 0.9em;
+    font-size: 14px;
     margin-bottom: 18px;
-    line-height: 1.4;
+    line-height: 1.5;
   }
   
   #discForm {
@@ -618,22 +636,22 @@ button:active {
   }
   
   .question h3 {
-    font-size: 0.9em;
+    font-size: 14px;
     margin-bottom: 8px;
   }
   
   .question table {
-    font-size: 0.7em;
+    font-size: 12px;
   }
   
   .question th {
     padding: 5px 2px;
-    font-size: 0.6em;
+    font-size: 12px;
   }
   
   .question td {
     padding: 4px 2px;
-    font-size: 0.65em;
+    font-size: 12px;
   }
   
   .question td:first-child {
@@ -664,21 +682,21 @@ button:active {
   }
   
   .score-table {
-    font-size: 0.75em;
+    font-size: 12px;
   }
   
   .score-table th {
     padding: 8px 4px;
-    font-size: 0.75em;
+    font-size: 12px;
   }
   
   .score-table td {
     padding: 6px 4px;
-    font-size: 0.8em;
+    font-size: 12px;
   }
   
   .score-value {
-    font-size: 1em;
+    font-size: 14px;
   }
 }
 
@@ -705,11 +723,11 @@ button:active {
   }
   
   h1 {
-    font-size: 1.2em;
+    font-size: 14px;
   }
   
   .subtitle {
-    font-size: 0.85em;
+    font-size: 14px;
   }
   
   .question {
@@ -717,11 +735,11 @@ button:active {
   }
   
   .question h3 {
-    font-size: 0.85em;
+    font-size: 14px;
   }
   
   .question table {
-    font-size: 0.65em;
+    font-size: 12px;
   }
   
   button {
@@ -1019,9 +1037,10 @@ button:active {
 
 .modal-header h2 {
   margin: 0;
-  font-size: 1.8em;
+  font-size: 14px;
   font-weight: 600;
   color: white;
+  line-height: 1.5;
 }
 
 .modal-close {
@@ -1054,8 +1073,9 @@ button:active {
 .modal-body {
   padding: 30px;
   color: #333;
-  line-height: 1.8;
-  font-size: 16px;
+  line-height: 1.5;
+  font-size: 12px;
+  text-align: justify;
 }
 
 .modal-body p {
@@ -1140,7 +1160,7 @@ button:active {
   }
 
   .modal-header h2 {
-    font-size: 1.4em;
+    font-size: 14px;
   }
 
   .modal-close {
@@ -1151,7 +1171,7 @@ button:active {
 
   .modal-body {
     padding: 20px;
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .modal-body ul {
@@ -1184,13 +1204,13 @@ button:active {
   }
 
   .modal-header h2 {
-    font-size: 1.2em;
+    font-size: 14px;
   }
 
   .modal-body {
     padding: 15px;
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 12px;
+    line-height: 1.5;
   }
 
   .modal-question {
