@@ -20,15 +20,26 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.banner-image {
+  width: 100%; /* Ocupa el 100% del ancho del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen (importante) */
+  display: block; /* Evita cualquier espacio debajo de la imagen */
+  border-radius: 12px; /* Opcional: para que coincida con el estilo del contenedor */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Opcional: agrega sombra */
+}
+
+/* Opcional: Si quieres centrar el contenedor del banner, deja .logo-header y .logo-container como están, pero verifica que no haya una altura que lo limite */
+
 .logo-header {
   text-align: center;
   margin-bottom: 30px;
 }
 
 .logo-container {
-  display: inline-block;
+  display: inline-block; /* Opcional, si quieres centrar el bloque de la imagen */
   position: relative;
   margin-bottom: 20px;
+  /* Asegúrate de que no haya una altura fija o máxima aquí */
 }
 
 .logo-circle {
@@ -118,6 +129,7 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .question {
@@ -169,7 +181,7 @@ h1 {
 
 .question h3 {
   color: #5fa890;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 12px;
   text-align: center;
   font-weight: 700;
@@ -193,6 +205,7 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   line-height: 1.5;
+  text-align: center;
 }
 
 .question th:first-child {
@@ -207,7 +220,7 @@ h1 {
   padding: 8px 4px;
   text-align: center;
   border-bottom: 1px solid #e0e8f5;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -220,7 +233,7 @@ h1 {
 }
 
 .question td:first-child {
-  text-align: justify;
+  text-align: center;
   padding-left: 8px;
   font-weight: 500;
   color: #333;
@@ -416,7 +429,7 @@ button:active {
   }
   
   .subtitle {
-    font-size: 14px;
+    font-size: 18px;
     margin-bottom: 25px;
   }
   

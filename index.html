@@ -5,32 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>DISC Test Onboarding</title>
+  <title>Professional Landing Test</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="logo-header">
-    <div class="logo-container">
-
-    <div class="header-title">DISC Personality Test</div>
-    <div class="header-tagline">Habilidades globales para el posicionamiento laboral</div>
+  <div class="logo-container">
+    <img src="banner.png" alt="Professional Landing Banner - Competencias y Actitudes Globales" class="banner-image">
   </div>
 
-  <!-- Modal de Bienvenida -->
   <div id="welcomeModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Bienvenida al Test DISC</h2>
+        <h2>Bienvenido/a al Professional Landing Test</h2>
         <button class="modal-close" id="closeModal">&times;</button>
       </div>
       <div class="modal-body">
         <p><strong>Estimado/a estudiante,</strong></p>
-            
+
         <p>Le damos la bienvenida al Test de Proyección Laboral de Duoc UC Plaza Oeste que permite identificar patrones de personalidad.</p>
-            
+
         <p>Para ello, contará con <strong>40 minutos</strong> para realizar el formulario. Seleccione la cualidad que le represente en <strong>mayor</strong> y <strong>menor</strong> grado en cada uno de los 28 grupos. Finalmente, seleccione la opción <strong>“Enviar respuestas”</strong>.</p>
-            
-        <p>Al finalizar, ingrese sus datos para recibir los resultados a su correo, incluyendo:</p>        
+
+        <p>Al finalizar, ingrese sus datos para recibir los resultados a su correo, incluyendo:</p>
 
         <ul style="list-style: none; padding-left: 0;">
 
@@ -50,11 +47,8 @@
   </div>
 
   <div class="container">
-    <p class="subtitle">Por cada pregunta de la 1 a la 28, escoja una frase que <b>más lo describa a usted</b> y una que <b>menos lo describa a usted</b>.</p>
-    
-    <!-- Score Counter Display -->
-    <div id="scoreCounter" class="score-counter-container"></div>
-    
+    <p class="subtitle" style="text-align: center;"><strong>Seleccione</strong> la cualidad que le <strong>represente</strong> en <strong>mayor</strong> y <strong>menor</strong> grado en cada uno de los 28 grupos.</p>
+
     <form id="discForm"></form>
     <div class="button-container">
       <button type="button" id="randomizeBtn">✦ Randomize Answers</button>
@@ -71,27 +65,27 @@
       const modal = document.getElementById('welcomeModal');
       const closeModal = document.getElementById('closeModal');
       const startTestBtn = document.getElementById('startTestBtn');
-      
+
       // Mostrar modal al cargar la página
       modal.style.display = 'flex';
-      
+
       // Cerrar modal al hacer clic en X
       closeModal.addEventListener('click', function() {
         modal.style.display = 'none';
       });
-      
+
       // Cerrar modal al hacer clic en "Comenzar Test"
       startTestBtn.addEventListener('click', function() {
         modal.style.display = 'none';
       });
-      
+
       // Cerrar modal al hacer clic fuera del contenido
       modal.addEventListener('click', function(e) {
         if (e.target === modal) {
           modal.style.display = 'none';
         }
       });
-      
+
       // Cerrar modal con tecla ESC
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && modal.style.display === 'flex') {
