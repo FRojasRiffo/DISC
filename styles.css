@@ -400,6 +400,19 @@ button:active {
     padding: 20px 15px;
   }
   
+  .logo-header {
+    margin-bottom: 20px; /* Reduce margin from 30px */
+  }
+  
+  .logo-container {
+    margin-bottom: 15px; /* Reduce margin from 20px */
+  }
+  
+  /* You may want to reduce the shadow on the banner for performance/aesthetics */
+  .banner-image {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
   .container {
     padding: 25px 20px;
     border-radius: 15px;
@@ -499,6 +512,14 @@ button:active {
     padding: 15px 10px;
   }
   
+  .logo-header {
+    margin-bottom: 15px; /* Further reduced margin */
+  }
+  
+  .logo-container {
+    margin-bottom: 10px; /* Further reduced margin */
+  }
+
   .container {
     padding: 20px 15px;
     /* Further reduce shadows on small screens */
