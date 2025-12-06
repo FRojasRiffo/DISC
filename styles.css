@@ -467,9 +467,11 @@ button:active {
   .question {
     padding: 12px;
     /* Reduce box-shadow on mobile */
-    box-shadow: 0 2px 8px rgba(127, 184, 163, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3), 0 0 15px rgba(0, 212, 255, 0.1);
     /* Disable will-change on mobile to save memory */
     will-change: auto;
+    /* Ensure dark background on mobile */
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.9) 0%, rgba(30, 58, 95, 0.9) 100%);
   }
   
   .question h3 {
@@ -557,9 +559,9 @@ button:active {
   .question {
     aspect-ratio: auto;
     padding: 12px;
-    /* Simplify gradients on mobile */
-    background: #ffffff;
-    box-shadow: 0 2px 6px rgba(127, 184, 163, 0.12);
+    /* Simplify gradients on mobile but keep dark theme */
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.95) 0%, rgba(30, 58, 95, 0.95) 100%);
+    box-shadow: 0 2px 6px rgba(0, 212, 255, 0.3), 0 0 12px rgba(0, 212, 255, 0.1);
   }
   
   .question h3 {
@@ -677,9 +679,9 @@ button:active {
   .question {
     padding: 10px;
     border-radius: 10px;
-    /* Remove gradients on very small screens */
-    background: #ffffff;
-    box-shadow: 0 1px 4px rgba(127, 184, 163, 0.1);
+    /* Keep dark theme on very small screens */
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.95) 0%, rgba(30, 58, 95, 0.95) 100%);
+    box-shadow: 0 1px 4px rgba(0, 212, 255, 0.3), 0 0 10px rgba(0, 212, 255, 0.1);
   }
   
   .question h3 {
