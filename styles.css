@@ -1090,7 +1090,7 @@ button:active {
 
 .modal-header h2 {
   margin: 0;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   color: #0a1929;
   line-height: 1.5;
@@ -1128,7 +1128,7 @@ button:active {
   padding: 30px;
   color: #e0e0e0;
   line-height: 1.5;
-  font-size: 14px;
+  font-size: 16px;
   text-align: justify;
 }
 
@@ -1215,7 +1215,7 @@ button:active {
   }
 
   .modal-header h2 {
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .modal-close {
